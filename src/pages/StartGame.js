@@ -4,23 +4,23 @@ import Button from "../components/Button";
 import { startGame } from "../store/slices/gameState.slice";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+
 const StartGame = () => {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
+  var name=auth.currentUser.email;
+  const Dispatch = useDispatch();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log(auth);
+      console.log(auth.email);
     }
   });
-
+  
   const startGameHandler = () => {
-    dispatch(startGame({email}));
+    Dispatch(startGame({name}));
   };
   return (
     <div className="flex flex-col justify-center items-center mt-80">
-      <h1>Hi There!</h1>
-      <input type='text' value={email} onChange={e => setEmail(e.target.value)} />
+      <h1>Hello {auth.currentUser.email}</h1>
       <Button onClick={startGameHandler}>Start Game</Button>
     </div>
   );
