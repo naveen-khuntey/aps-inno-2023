@@ -4,6 +4,7 @@ import {
   FETCHING_GAME,
   GAME,
   END_GAME,
+  END_QUESTION
 } from "../../utils/constants";
 import { fetchQuestionsSuccess, fetchQuestionsFail } from "./quiz.slice";
 
@@ -23,6 +24,9 @@ const gameState = createSlice({
     cancelFetchQuestions(state) {
       state.stage = START_GAME;
     },
+    finishQuestion(state){
+      state.stage = END_QUESTION;
+    },
     finishGame(state) {
       state.stage = END_GAME;
     },
@@ -41,7 +45,7 @@ const gameState = createSlice({
   },
 });
 
-export const { startGame, cancelFetchQuestions, finishGame, restartGame } =
+export const { startGame, cancelFetchQuestions, finishGame, restartGame, finishQuestion } =
   gameState.actions;
 
 export default gameState.reducer;
