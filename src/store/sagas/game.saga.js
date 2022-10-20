@@ -6,8 +6,15 @@ import {
 } from "../slices/quiz.slice";
 import { finishGame } from "../slices/gameState.slice";
 
+function* takeQuestion() {
+  yield take(answerQuestion.type);
+}
 function* answersSaga() {
   for (let i = 0; i < 10; i++) {
+    // yield race({
+    //   delay: delay(12000),
+    //   done: takeQuestion()
+    // });
     yield take(answerQuestion.type);
     yield put(nextQuestion());
   }
@@ -18,7 +25,7 @@ export default function* gameSaga() {
     yield take(fetchQuestionsSuccess.type);
 
     yield race({
-      delay: delay(60000),
+      delay: delay(120000),
       done: answersSaga()
     });
 

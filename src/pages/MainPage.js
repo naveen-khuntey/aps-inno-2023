@@ -8,6 +8,7 @@ import { START_GAME, FETCHING_GAME, GAME, END_GAME } from "../utils/constants";
 
 const MainPage = () => {
   const currentStage = useSelector((state) => state.gameState.stage);
+  const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
 
   let displayedPage;
   switch (currentStage) {
