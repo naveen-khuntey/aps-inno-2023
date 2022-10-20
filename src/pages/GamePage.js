@@ -4,14 +4,14 @@ import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 
-let time = 12;
+//let time = 12;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(12);
+  const [timeLeft, setTimeLeft] = useState(30);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
-  const score = useSelector((state) => state.quiz.score);
+  // const score = useSelector((state) => state.quiz.score);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   const lives = useSelector((state) => state.quiz.lives);
 
@@ -19,10 +19,17 @@ const GamePage = () => {
     const interval = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
+ 
+
     return () => {
       clearInterval(interval);
+      if(lives < 2){
+        dispatch(finishGame())
+      }
+      
+      
     };
-  }, []);
+  }, [lives]);
 
   const answerHandler = (answer) => {
     dispatch(answerQuestion({ answer }));
@@ -39,7 +46,7 @@ const GamePage = () => {
           {timeLeft}
         </p>
         <p className="absolute top-4 left-4 text-2xl text-purple-500">
-          Lives left: {lives}
+          Lives left: {lives}x❤️
         </p>
         <p className="absolute top-4 right-4 text-2xl text-purple-500">
           Question no: {currentIndex+1}
