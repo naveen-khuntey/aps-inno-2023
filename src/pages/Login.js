@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import Button from "../components/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { storeUserData } from "../store/slices/user.slice";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,8 +14,9 @@ import { collection } from "firebase/firestore";
 
 function Login({ isAuth }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const usersCollectionRef = collection(db, "users");
-  const { createUser, isUniqueUsername } = DBfunctions;
+  const { getSingleUser, createUser, isUniqueUsername } = DBfunctions;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +29,17 @@ function Login({ isAuth }) {
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+  const dispatchData = async (userdata) => {
+    await dispatch(
+      storeUserData({
+        id: userdata.id,
+        username: userdata.username,
+        email: userdata.email,
+        phone: userdata.phone,
+      })
+    );
+  };
+
   const toggleAuth = () => {
     setEmail("");
     setPassword("");
@@ -35,12 +49,31 @@ function Login({ isAuth }) {
     setIsSignup((prev) => !prev);
   };
 
-  const signIn = (e) => {
-    e.preventDefault();
+  const getIndividualUser = async (id) => {
+    try {
+      const user = await getSingleUser({
+        collectionRef: usersCollectionRef,
+        id,
+      });
+      dispatchData({
+        id,
+        email: user.email,
+        phone: user.phone,
+        username: user.username,
+      });
+      setIsLoggingIn(false);
+      navigate("/");
+    } catch (e) {
+      setIsLoggingIn(false);
+      alert("Error" + e.message);
+    }
+  };
+
+  const signIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setIsLoggingIn(false);
-        navigate("/");
+        const uid = userCredential.user.uid;
+        getIndividualUser(uid);
       })
       .catch((error) => {
         setIsLoggingIn(false);
@@ -54,11 +87,11 @@ function Login({ isAuth }) {
     }
   }, []);
 
-  const postUserData = async () => {
+  const postUserData = async (uid) => {
     try {
       await createUser({
         collectionRef: usersCollectionRef,
-        data: { email, phone, username },
+        data: { id: uid, email, phone, username },
       });
       setIsRegistering(false);
       navigate("/");
@@ -71,7 +104,13 @@ function Login({ isAuth }) {
   const register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        postUserData();
+        dispatchData({
+          id: userCredential.user.uid,
+          email,
+          username,
+          phone,
+        });
+        postUserData(userCredential.user.uid);
       })
       .catch((error) => {
         setIsRegistering(false);

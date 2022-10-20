@@ -9,15 +9,15 @@ const createUser = async ({ collectionRef, data }) => {
 // READ USERS
 const getUsers = async ({ collectionRef }) => {
   const data = await getDocs(collectionRef);
-  const users = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  const users = data.docs.map((doc) => ({ ...doc.data() }));
   return users;
 };
 
 //GET SINLE USER DATA
-const getUser = async ({ collectionRef, id }) => {
-  const data = getUsers({ collectionRef });
-  const users = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  return users;
+const getSingleUser = async ({ collectionRef, id }) => {
+  const data = await getUsers({ collectionRef });
+  const user = data.find((myuser) => myuser.id === id);
+  return user;
 };
 
 // UPDATE USER => NO NEED AS OF NOW
@@ -40,6 +40,7 @@ const isUniqueUsername = async ({ collectionRef, username }) => {
 const exportData = {
   createUser,
   getUsers,
+  getSingleUser,
   isUniqueUsername,
 };
 
