@@ -26,7 +26,7 @@ const quizSlice = createSlice({
     answerQuestion(state, action) {
       const currentQuestion = state.questions[state.currentQuestionIndex];
       state.score += action.payload.answer === currentQuestion.correct_answer ? 1 : 0;
-      state.lives -= action.payload.answer === currentQuestion.correct_answer ? 1 : 0;
+      state.lives -= action.payload.answer === currentQuestion.correct_answer ? 0 : 1;
       state.answers.push({
         question: currentQuestion.question,
         answer: action.payload.answer,
