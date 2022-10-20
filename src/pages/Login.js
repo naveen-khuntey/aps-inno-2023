@@ -1,72 +1,205 @@
-import React, { useEffect,useState } from 'react';
-import './Login.css'
+import React, { useEffect, useState } from "react";
+import "./Login.css";
+import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import {  createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-function Login({isAuth}) {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const signIn = e => {
-        e.preventDefault();
-        signInWithEmailAndPassword(auth,email, password)
-        .then((userCredential) => {
-                navigate("/");
-            })
-            .catch((error) => {
-                alert(error.message)
-              });
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { db, auth } from "../firebase";
+import DBfunctions from "../utils/db";
+import { collection } from "firebase/firestore";
+
+function Login({ isAuth }) {
+  const navigate = useNavigate();
+  const usersCollectionRef = collection(db, "users");
+  const { createUser, isUniqueUsername } = DBfunctions;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
+
+  const [isSignup, setIsSignup] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const toggleAuth = () => {
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setPhone("");
+    setUsername("");
+    setIsSignup((prev) => !prev);
+  };
+
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setIsLoggingIn(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        setIsLoggingIn(false);
+        alert(error.message);
+      });
+  };
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/login");
     }
+  }, []);
 
-    useEffect(() =>{
-        if(!isAuth)
-        {
-        navigate("/login");
-        }
-      }, []);
-
-    const register = e => {
-        e.preventDefault();
-        createUserWithEmailAndPassword(auth,email, password)
-            .then((userCredential) => {
-            navigate("/");
-            })
-            .catch((error) => {
-                alert(error.message)
-              });
+  const postUserData = async () => {
+    try {
+      await createUser({
+        collectionRef: usersCollectionRef,
+        data: { email, phone, username },
+      });
+      setIsRegistering(false);
+      navigate("/");
+    } catch (e) {
+      setIsRegistering(false);
+      alert("Error" + e.message);
     }
+  };
 
-    return (
-        <div className='login'>
-            <Link to='/'>
-                <img
-                    className="login__logo"
-                    src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png' 
-                />
-            </Link>
+  const register = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        postUserData();
+      })
+      .catch((error) => {
+        setIsRegistering(false);
+        alert(error.message);
+      });
+  };
 
-            <div className='login__container'>
-                <h1>Sign-in</h1>
+  const checkAvailability = async () => {
+    try {
+      const isUnique = await isUniqueUsername({
+        collectionRef: usersCollectionRef,
+        username,
+      });
+      if (!isUnique) {
+        setIsRegistering(false);
+        alert("Username already in use!");
+      } else {
+        register();
+      }
+    } catch (e) {
+      setIsRegistering(false);
+      alert("Error" + e.message);
+    }
+  };
 
-                <form>
-                    <h5>E-mail</h5>
-                    <input type='text' value={email} onChange={e => setEmail(e.target.value)} />
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isSignup) {
+      setIsLoggingIn(true);
+      signIn();
+    } else {
+      setIsRegistering(true);
+      //BASIC VALIDATION
 
-                    <h5>Password</h5>
-                    <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
+      if (password !== confirmPassword) {
+        setIsRegistering(false);
+        alert("Passwords do not match. Try again!");
+        setConfirmPassword("");
+        return;
+      }
 
-                    <button type='submit' onClick={signIn} className='login__signInButton'>Sign In</button>
-                </form>
+      let regexp = /^[6789]\d{9}$/;
+      if (!phone.match(regexp)) {
+        setIsRegistering(false);
+        alert("Invalid phone number!");
+        return;
+      }
+      //check for availability of the username
+      checkAvailability();
+    }
+  };
 
-                <p>
-                    By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please
-                    see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
-                </p>
-
-                <button onClick={register} className='login__registerButton'>Create your Amazon Account</button>
-            </div>
+  return (
+    <div className="font-mono bg-purple-50 min-h-screen ">
+      <h1 className="bg-purple-500 text-white p-4 text-2xl text-center uppercase">
+        {isSignup ? "SIGN UP" : "LOG IN"}
+      </h1>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col justify-center items-center mt-60">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your Email..."
+            className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password here..."
+            className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
+          />
+          {isSignup && (
+            <>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Enter password again"
+                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
+              />
+              <input
+                type="text"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone number without +91 "
+                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
+              />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username..."
+                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
+              />
+            </>
+          )}
+          {isSignup ? (
+            <>
+              <Button addClassNames="mb-6">
+                {isRegistering ? "Signing up" : "Signup"}
+              </Button>
+              <p
+                style={{ color: "#999", fontSize: "15px", cursor: "pointer" }}
+                onClick={() => toggleAuth()}
+                className="mb-10"
+              >
+                Already have an account?
+              </p>
+            </>
+          ) : (
+            <>
+              <Button addClassNames="mb-6">
+                {isLoggingIn ? "Logging in" : "Login"}
+              </Button>
+              <p
+                style={{ color: "#999", fontSize: "15px", cursor: "pointer" }}
+                onClick={() => toggleAuth()}
+              >
+                Don't have an account?
+              </p>
+            </>
+          )}
         </div>
-    )
+      </form>
+    </div>
+  );
 }
 
-export default Login
+export default Login;

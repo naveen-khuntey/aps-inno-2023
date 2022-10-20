@@ -16,32 +16,25 @@ const GamePage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-<<<<<<< HEAD
-      setTimeLeft((prev) => prev - 1);
-    }, 3000);
-=======
       console.log("Time left", time);
       time--;
-      if(time != -1){
+      if (time != -1) {
         setTimeLeft((prev) => prev - 1);
-      }else{
-        dispatch(answerQuestion( "Bleh" ));
+      } else {
+        dispatch(answerQuestion("Bleh"));
         resetTimer();
       }
-      
     }, 1000);
->>>>>>> f3705cd600ca816074a92563df5aeae5f446c5b7
     return () => {
       clearInterval(interval);
     };
   }, []);
 
-  const resetTimer = () =>{
+  const resetTimer = () => {
     time = 12;
     setTimeLeft(12);
-  }
-  const answerHandler = async(answer) => {
-    
+  };
+  const answerHandler = async (answer) => {
     await dispatch(answerQuestion({ answer }));
     resetTimer();
   };
