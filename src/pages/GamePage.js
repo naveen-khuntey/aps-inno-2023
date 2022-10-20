@@ -4,9 +4,10 @@ import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 
+let time = 12;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(12);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
