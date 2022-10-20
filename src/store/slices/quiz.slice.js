@@ -4,8 +4,9 @@ const initialState = {
   questions: [],
   error: null,
   score: null,
+  currency: null,
   currentQuestionIndex: null,
-  answers: []
+  answers: [],
 };
 
 const quizSlice = createSlice({
@@ -15,6 +16,7 @@ const quizSlice = createSlice({
     fetchQuestionsSuccess(state, action) {
       state.questions = action.payload;
       state.score = 0;
+      state.currency = 0;
       state.currentQuestionIndex = 0;
       state.answers = [];
     },
@@ -23,26 +25,31 @@ const quizSlice = createSlice({
     },
     answerQuestion(state, action) {
       const currentQuestion = state.questions[state.currentQuestionIndex];
+      state.currency +=
+        action.payload.questionType &&
+        action.payload.answer === currentQuestion.correct_answer
+          ? action.payload.time_left
+          : 0;
       state.score +=
         action.payload.answer === currentQuestion.correct_answer ? 1 : 0;
       state.answers.push({
         question: currentQuestion.question,
         answer: action.payload.answer,
         correctAnswer: currentQuestion.correct_answer,
-        isCorrect: action.payload.answer === currentQuestion.correct_answer
+        isCorrect: action.payload.answer === currentQuestion.correct_answer,
       });
     },
     nextQuestion(state) {
       state.currentQuestionIndex += 1;
-    }
-  }
+    },
+  },
 });
 
 export const {
   fetchQuestionsSuccess,
   fetchQuestionsFail,
   answerQuestion,
-  nextQuestion
+  nextQuestion,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;
