@@ -4,10 +4,10 @@ import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 
-//let time = 12;
+let time = 12;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(12);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
@@ -71,7 +71,7 @@ const GamePage = () => {
         <p className="absolute top-4 right-4 text-2xl text-purple-500">
           Question no: {currentIndex+1}
         </p>
-        <p className="absolute top-4 right-40 text-2xl text-purple-500">
+        <p className="absolute top-20 right-4 text-2xl text-purple-500">
           Chronons: {currency}
         </p>
         <p
