@@ -4,19 +4,22 @@ import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 
-let time = 12;
+//let time = 12;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(12);
+  const [timeLeft, setTimeLeft] = useState(30);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
+
   const score = useSelector((state) => state.quiz.score);
   const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
+  const lives = useSelector((state) => state.quiz.lives);
 
   useEffect(() => {
     const interval = setInterval(() => {
+
       console.log("Time left", time);
       time--;
       if (time !== -1) {
@@ -25,11 +28,20 @@ const GamePage = () => {
       dispatch(answerQuestion({ answer: "Bleh" }));
         resetTimer();
       }
+
     }, 1000);
+ 
+
     return () => {
       clearInterval(interval);
+      if(lives < 2){
+        dispatch(finishGame())
+      }
+      
+      
     };
-  }, []);
+  }, [lives]);
+
 
   const resetTimer = () => {
     time = 12;
@@ -40,6 +52,7 @@ const GamePage = () => {
     let time_left = timeLeft;
     await dispatch(answerQuestion({ answer, time_left, questionType }));
     resetTimer();
+
   };
 
   const restartHandler = () => {
@@ -53,10 +66,10 @@ const GamePage = () => {
           {timeLeft}
         </p>
         <p className="absolute top-4 left-4 text-2xl text-purple-500">
-          {score}
+          Lives left: {lives}x❤️
         </p>
         <p className="absolute top-4 right-4 text-2xl text-purple-500">
-          {currentIndex}/10
+          Question no: {currentIndex+1}
         </p>
         <p className="absolute top-4 right-40 text-2xl text-purple-500">
           Chronons: {currency}

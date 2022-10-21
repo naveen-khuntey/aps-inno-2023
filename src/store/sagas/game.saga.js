@@ -25,10 +25,11 @@ export default function* gameSaga() {
     yield take(fetchQuestionsSuccess.type);
 
     yield race({
-      delay: delay(120000),
+      delay: delay(30000),
       done: answersSaga()
     });
 
     yield put(finishGame());
   }
 }
+
