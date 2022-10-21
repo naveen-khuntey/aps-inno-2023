@@ -11,13 +11,24 @@ const GamePage = () => {
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
-  // const score = useSelector((state) => state.quiz.score);
+
+  const score = useSelector((state) => state.quiz.score);
+  const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   const lives = useSelector((state) => state.quiz.lives);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+
+      console.log("Time left", time);
+      time--;
+      if (time !== -1) {
+        setTimeLeft((prev) => prev - 1);
+      } else {
+      dispatch(answerQuestion({ answer: "Bleh" }));
+        resetTimer();
+      }
+
     }, 1000);
  
 
@@ -31,8 +42,17 @@ const GamePage = () => {
     };
   }, [lives]);
 
-  const answerHandler = (answer) => {
-    dispatch(answerQuestion({ answer }));
+
+  const resetTimer = () => {
+    time = 12;
+    setTimeLeft(12);
+  };
+  const answerHandler = async (answer) => {
+    let questionType = true;
+    let time_left = timeLeft;
+    await dispatch(answerQuestion({ answer, time_left, questionType }));
+    resetTimer();
+
   };
 
   const restartHandler = () => {
@@ -50,6 +70,9 @@ const GamePage = () => {
         </p>
         <p className="absolute top-4 right-4 text-2xl text-purple-500">
           Question no: {currentIndex+1}
+        </p>
+        <p className="absolute top-4 right-40 text-2xl text-purple-500">
+          Chronons: {currency}
         </p>
         <p
           dangerouslySetInnerHTML={{ __html: question }}
