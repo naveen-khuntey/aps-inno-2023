@@ -19,8 +19,11 @@ const GamePage = () => {
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
+
   const score = useSelector((state) => state.quiz.score);
+  const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
+  const lives = useSelector((state) => state.quiz.lives);
 
   //Special Question
   const [x, setX] = useState(0);
@@ -37,29 +40,40 @@ const GamePage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      //console.log("Time left", time);
+
+      console.log("Time left", time);
       time--;
-      if(time != -1){
+      if (time !== -1) {
         setTimeLeft((prev) => prev - 1);
-      }else{
-        dispatch(answerQuestion( "Bleh" ));
+      } else {
+      dispatch(answerQuestion({ answer: "Bleh" }));
         resetTimer();
       }
-      
+
     }, 1000);
+ 
+
     return () => {
       clearInterval(interval);
+      if(lives < 2){
+        dispatch(finishGame())
+      }
+      
+      
     };
-  }, []);
+  }, [lives]);
 
-  const resetTimer = () =>{
+
+  const resetTimer = () => {
     time = 12;
     setTimeLeft(12);
-  }
-  const answerHandler = async(answer) => {
-    
-    await dispatch(answerQuestion({ answer }));
+  };
+  const answerHandler = async (answer) => {
+    let questionType = true;
+    let time_left = timeLeft;
+    await dispatch(answerQuestion({ answer, time_left, questionType }));
     resetTimer();
+
   };
 
   const restartHandler = () => {
@@ -73,10 +87,13 @@ const GamePage = () => {
           {timeLeft}
         </p>
         <p className="absolute top-4 left-4 text-2xl text-purple-500">
-          {score}
+          Lives left: {lives}x❤️
         </p>
         <p className="absolute top-4 right-4 text-2xl text-purple-500">
-          {currentIndex+1}/10
+          Question no: {currentIndex+1}
+        </p>
+        <p className="absolute top-20 right-4 text-2xl text-purple-500">
+          Chronons: {currency}
         </p>
 
         <p className="absolute top-10 right-4 text-2xl text-purple-500">
