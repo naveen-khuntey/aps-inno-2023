@@ -3,6 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
+import { produceWithPatches } from "immer";
+
+//Index array of the special questions
+const specialIndex = [];
+for(let i = 0; i<60; i++){
+  specialIndex[i] = Math.floor(Math.random()*5) + 5*i;
+  console.log(specialIndex[i]);
+}
 
 let time = 12;
 const GamePage = () => {
@@ -16,6 +24,19 @@ const GamePage = () => {
   const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   const lives = useSelector((state) => state.quiz.lives);
+
+  //Special Question
+  const [x, setX] = useState(0);
+  const [specialQues, setspcialQues] = useState("");
+  useEffect(()=>{
+    if(currentIndex===specialIndex[x]){
+      setX(x=>x+1);
+      setspcialQues(prev=>"Special Question!");
+      console.log("x = ",x);
+    } else{
+      setspcialQues(prev=>"");
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -74,6 +95,11 @@ const GamePage = () => {
         <p className="absolute top-20 right-4 text-2xl text-purple-500">
           Chronons: {currency}
         </p>
+
+        <p className="absolute top-10 right-4 text-2xl text-purple-500">
+          {specialQues}
+        </p>
+
         <p
           dangerouslySetInnerHTML={{ __html: question }}
           className="p-7 bg-white rounded shadow "
