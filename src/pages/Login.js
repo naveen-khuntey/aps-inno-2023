@@ -7,10 +7,12 @@ import { storeUserData } from "../store/slices/user.slice";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  deleteUser 
 } from "firebase/auth";
 import { db, auth } from "../firebase";
 import DBfunctions from "../utils/db";
 import { collection } from "firebase/firestore";
+
 
 function Login({ isAuth }) {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ function Login({ isAuth }) {
   const [isSignup, setIsSignup] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+
 
   const dispatchData = async (userdata) => {
     await dispatch(
@@ -104,13 +107,17 @@ function Login({ isAuth }) {
   const register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        dispatchData({
-          id: userCredential.user.uid,
-          email,
-          username,
-          phone,
-        });
-        postUserData(userCredential.user.uid);
+        console.log(ValidateEmail(email))
+        if(ValidateEmail(email))
+        {
+          dispatchData({
+            id: userCredential.user.uid,
+            email,
+            username,
+            phone,
+          });
+          postUserData(userCredential.user.uid);
+        }
       })
       .catch((error) => {
         setIsRegistering(false);
@@ -162,6 +169,38 @@ function Login({ isAuth }) {
       checkAvailability();
     }
   };
+
+
+function ValidateEmail(inputText)
+{
+var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+if(inputText.match(mailformat))
+{
+  if((inputText.endsWith("gmail.com"))||(inputText.endsWith("nitrkl.ac.in"))||(inputText.endsWith("hotmail.com"))||(inputText.endsWith("outlook.com"))||(inputText.endsWith("yahoo.com")))
+  {
+    return true;
+  }
+  else
+  {
+      alert("Please check your Email ID.");
+      const user = auth.currentUser;
+
+      deleteUser(user).then(() => {
+          // User deleted.
+      }).catch((error) => {
+          // An error ocurred
+      });
+
+    }
+      return false;
+  }
+else
+{
+alert("You have entered an invalid email address");
+return false;
+}
+}
+
 
   return (
     <div className="font-mono bg-purple-50 min-h-screen ">
