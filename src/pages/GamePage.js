@@ -32,7 +32,7 @@ const GamePage = () => {
     if(currentIndex===specialIndex[x]){
       setX(x=>x+1);
       setspcialQues(prev=>"Special Question!");
-      console.log("x = ",x);
+      //console.log("x = ",x);
     } else{
       setspcialQues(prev=>"");
     }
@@ -58,8 +58,6 @@ const GamePage = () => {
       if(lives < 2){
         dispatch(finishGame())
       }
-      
-      
     };
   }, [lives]);
 
@@ -83,26 +81,26 @@ const GamePage = () => {
   return (
     <>
       <div className="flex flex-col items-center relative">
-        <p className="h-20 w-20 flex justify-center items-center border-8 border-purple-500 rounded-full my-4 text-3xl text-purple-500">
+        <p className="h-20 w-20 flex justify-center items-center border-8 border-rose-700 rounded-full my-4 text-3xl text-rose-500">
           {timeLeft}
         </p>
-        <p className="absolute top-4 left-4 text-2xl text-purple-500">
+        <p className="absolute top-4 left-4 text-2xl text-rose-700">
           Lives left: {lives}x❤️
         </p>
-        <p className="absolute top-4 right-4 text-2xl text-purple-500">
+        <p className="absolute top-4 right-4 text-2xl text-rose-700">
           Question no: {currentIndex+1}
         </p>
-        <p className="absolute top-20 right-4 text-2xl text-purple-500">
+        <p className="absolute top-20 right-4 text-2xl text-rose-700">
           Chronons: {currency}
         </p>
 
-        <p className="absolute top-10 right-4 text-2xl text-purple-500">
+        <p className="absolute top-10 right-4 text-2xl text-rose-700">
           {specialQues}
         </p>
 
         <p
           dangerouslySetInnerHTML={{ __html: question }}
-          className="p-7 bg-white rounded shadow "
+          className="p-7 bg-rose-200 rounded shadow "
         ></p>
         <div className="flex justify-between w-96 mt-8">
           <Button onClick={() => answerHandler("True")}>True</Button>
