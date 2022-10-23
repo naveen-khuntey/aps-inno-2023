@@ -63,7 +63,6 @@ const GamePage = () => {
     };
   }, [lives]);
 
-
   const resetTimer = () => {
     time = 12;
     setTimeLeft(12);
