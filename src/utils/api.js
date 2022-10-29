@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=20&type=boolean";
+const apiUrl = "https://opentdb.com/api.php?amount=50&category=18&difficulty=medium&type=multiple";
 
 //"https://opentdb.com/api.php?amount=10&type=boolean";
 export const fetchQuiz = () => {
