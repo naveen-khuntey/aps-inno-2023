@@ -13,9 +13,9 @@ const EndGamePage = () => {
   };
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl text-purple-500 my-4">Game Over</h1>
+      <h1 className="text-3xl text-rose-800 my-4">Game Over</h1>
       <h2 className="text-2xl mb-4">
-        Your score was <span className="text-purple-500">{score}</span> out of
+        Your score was <span className="text-rose-700">{score}</span> out of
         10.
       </h2>
       <Button onClick={restartHandler}>Try Again</Button>
@@ -23,7 +23,7 @@ const EndGamePage = () => {
         {answers.map((answer) => (
           <div
             key={answer.question}
-            className="border-b-2 border-purple-500 flex justify-between bg-white"
+            className="border-b-2 border-rose-300 flex justify-between bg-rose-100"
           >
             <span
               dangerouslySetInnerHTML={{ __html: answer.question }}
@@ -32,8 +32,8 @@ const EndGamePage = () => {
             <span
               className={`p-2 ${
                 answer.correctAnswer === answer.answer
-                  ? "text-green-500"
-                  : "text-red-500"
+                  ? "text-green-600"
+                  : "text-red-700"
               }`}
             >
               {answer.answer}
