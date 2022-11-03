@@ -4,6 +4,7 @@ import { answerQuestion } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 import { produceWithPatches } from "immer";
+import "./Login.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
@@ -18,10 +19,20 @@ for (let i = 0; i < 60; i++) {
 let time = 13;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(13);
+  const [timeLeft, setTimeLeft] = useState(12);
+  const [fiftyfifty, activatefiftyfifty] = useState(false);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
+  const options = useSelector(
+    (state) => state.quiz.questions[state.quiz.currentQuestionIndex].option
+  );
+  const correctanswer = useSelector(
+    (state) => state.quiz.questions[state.quiz.currentQuestionIndex].correct_answer
+  );
+  
+  // console.log(options);
+  const score = useSelector((state) => state.quiz.score);
 
   const [uplives, setUplives]=useState(false);
   const [disable1, setDisable1] = useState(true);
@@ -41,13 +52,15 @@ const GamePage = () => {
   //Special Question
   const [x, setX] = useState(0);
   const [specialQues, setspcialQues] = useState("");
-  useEffect(() => {
-    if (currentIndex === specialIndex[x]) {
-      setX((x) => x + 1);
-      setspcialQues((prev) => "Special Question!");
-      //console.log("x = ",x);
-    } else {
-      setspcialQues((prev) => "");
+  const wrongFinder = (value) => value !== correctanswer;
+  const wrong = options.filter(wrongFinder);
+  useEffect(()=>{
+    if(currentIndex===specialIndex[x]){
+      setX(x=>x+1);
+      setspcialQues(prev=>"Special Question!");
+      console.log("x = ",x);
+    } else{
+      setspcialQues(prev=>"");
     }
   }, [currentIndex]);
 
@@ -58,7 +71,7 @@ const GamePage = () => {
       if (time !== -1) {
         setTimeLeft((prev) => prev - 1);
       } else {
-        dispatch(answerQuestion({ answer: "Bleh" }));
+      answerHandler("Bleh");
         resetTimer();
       }
     }, 1000);
@@ -86,8 +99,13 @@ const GamePage = () => {
     let questionType = true;
     let time_left = timeLeft;
     await dispatch(answerQuestion({ answer, time_left, questionType }));
+    activatefiftyfifty(false);
     resetTimer();
   };
+
+  const fiftyop = () => {
+    activatefiftyfifty(true);
+  }
 
   const restartHandler = () => {
     dispatch(finishGame());
@@ -117,9 +135,30 @@ const GamePage = () => {
           dangerouslySetInnerHTML={{ __html: question }}
           className="p-7 bg-rose-200 rounded shadow "
         ></p>
-        <div className="flex justify-between w-96 mt-8">
-          <Button onClick={() => answerHandler("True")}>True</Button>
-          <Button onClick={() => answerHandler("False")}>False</Button>
+        <div className="flex justify-center w-96 mt-8 space-x-20">
+        <>
+        {!fiftyfifty && options && options.map((choice) => {
+          return(<Button onClick={() => answerHandler(choice)}>{choice}</Button>);
+        })}
+        </>
+        <>
+        {fiftyfifty && wrong && 
+        <>
+          <Button onClick={() => answerHandler(wrong[0])}>{wrong[0]}</Button>
+          <Button onClick={() => answerHandler(correctanswer)}>{correctanswer}</Button>
+        </>
+        }
+        </>
+          {/* <Button onClick={() => answerHandler("True")}>True</Button>
+          <Button onClick={() => answerHandler("False")}>False</Button> */}
+        </div>
+        <div className="fifty">
+        {
+          !fiftyfifty && <Button onClick={() => fiftyop()}>50-50</Button>
+        }
+        {
+          fiftyfifty && <Button  disabled onClick={() => fiftyop()}>50-50</Button>
+        }
         </div>
       </div>
       <Popup

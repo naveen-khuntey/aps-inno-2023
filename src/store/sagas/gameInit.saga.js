@@ -10,6 +10,7 @@ function* fetchQuestionSaga() {
   try {
     // yield delay(1000);
     const data = yield call(fetchQuiz);
+    console.log("Data", data);
     yield put(fetchQuestionsSuccess(data));
   } catch (error) {
     yield put(
