@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Login.css";
+
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -84,12 +84,6 @@ function Login({ isAuth }) {
       });
   };
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, []);
-
   const postUserData = async (uid) => {
     try {
       await createUser({
@@ -105,11 +99,10 @@ function Login({ isAuth }) {
   };
 
   const register = () => {
+    if(ValidateEmail(email))
+    {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(ValidateEmail(email))
-        if(ValidateEmail(email))
-        {
           dispatchData({
             id: userCredential.user.uid,
             email,
@@ -117,12 +110,12 @@ function Login({ isAuth }) {
             phone,
           });
           postUserData(userCredential.user.uid);
-        }
-      })
+        })
       .catch((error) => {
         setIsRegistering(false);
         alert(error.message);
       });
+    }
   };
 
   const checkAvailability = async () => {
@@ -182,17 +175,10 @@ if(inputText.match(mailformat))
   }
   else
   {
+    console.log("check")
       alert("Please check your Email ID.");
-      const user = auth.currentUser;
-
-      deleteUser(user).then(() => {
-          // User deleted.
-      }).catch((error) => {
-          // An error ocurred
-      });
-
-    }
       return false;
+    }
   }
 else
 {

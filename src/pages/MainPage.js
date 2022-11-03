@@ -29,9 +29,9 @@ const MainPage = () => {
   }
 
   return (
-    <div className="font-mono bg-purple-50 min-h-screen ">
-      <h1 className="bg-purple-500 text-white p-4 text-2xl text-center uppercase">
-        Quiz Game
+    <div className="bg-rose-50 py-4 min-h-screen">
+      <h1 className="bg-rose-900 mb-5 text-rose-100 p-5 w-3/4 rounded-lg drop-shadow-xl mx-auto text-3xl text-center">
+        Race Against Time
       </h1>
       {displayedPage}
     </div>

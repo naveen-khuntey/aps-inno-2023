@@ -5,15 +5,18 @@ import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 import { produceWithPatches } from "immer";
 import "./Login.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 //Index array of the special questions
+
 const specialIndex = [];
-for(let i = 0; i<60; i++){
-  specialIndex[i] = Math.floor(Math.random()*5) + 5*i;
-  // console.log(specialIndex[i]);
+for (let i = 0; i < 60; i++) {
+  specialIndex[i] = Math.floor(Math.random() * 5) + 5 * i;
+  console.log(specialIndex[i]);
 }
 
-let time = 12;
+let time = 13;
 const GamePage = () => {
   const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState(12);
@@ -30,9 +33,21 @@ const GamePage = () => {
   
   // console.log(options);
   const score = useSelector((state) => state.quiz.score);
+
+  const [uplives, setUplives]=useState(false);
+  const [disable1, setDisable1] = useState(true);
+  const [disable2, setDisable2] = useState(true);
+
+  const livesAdder =()=>{
+    setUplives(true);
+    setDisable1(false);
+  }
+
+  //const score = useSelector((state) => state.quiz.score);
   const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
-  const lives = useSelector((state) => state.quiz.lives);
+  let lives = useSelector((state) => state.quiz.lives);
+  lives+=uplives?1:0;
 
   //Special Question
   const [x, setX] = useState(0);
@@ -51,7 +66,6 @@ const GamePage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-
       console.log("Time left", time);
       time--;
       if (time !== -1) {
@@ -60,31 +74,33 @@ const GamePage = () => {
       answerHandler("Bleh");
         resetTimer();
       }
-
     }, 1000);
- 
 
     return () => {
       clearInterval(interval);
-      if(lives < 2){
-        dispatch(finishGame())
+      if (lives < 2) {
+        dispatch(finishGame());
       }
-      
-      
     };
   }, [lives]);
 
   const resetTimer = () => {
-    time = 12;
-    setTimeLeft(12);
+    time = 13;
+    setTimeLeft(13);
   };
+
+  const addtime = () => {
+    time =20;
+    setTimeLeft(20);
+    setDisable2(false);
+  }
+
   const answerHandler = async (answer) => {
     let questionType = true;
     let time_left = timeLeft;
     await dispatch(answerQuestion({ answer, time_left, questionType }));
     activatefiftyfifty(false);
     resetTimer();
-
   };
 
   const fiftyop = () => {
@@ -98,26 +114,26 @@ const GamePage = () => {
   return (
     <>
       <div className="flex flex-col items-center relative">
-        <p className="h-20 w-20 flex justify-center items-center border-8 border-purple-500 rounded-full my-4 text-3xl text-purple-500">
+        <p className="h-20 w-20 flex justify-center items-center border-8 border-rose-700 rounded-full my-4 text-3xl text-rose-500">
           {timeLeft}
         </p>
-        <p className="absolute top-4 left-4 text-2xl text-purple-500">
+        <p className="absolute top-4 left-4 text-2xl text-rose-700">
           Lives left: {lives}x❤️
         </p>
-        <p className="absolute top-4 right-4 text-2xl text-purple-500">
-          Question no: {currentIndex+1}
+        <p className="absolute top-4 right-4 text-2xl text-rose-700">
+          Question no: {currentIndex + 1}
         </p>
-        <p className="absolute top-20 right-4 text-2xl text-purple-500">
+        <p className="absolute top-20 right-4 text-2xl text-rose-700">
           Chronons: {currency}
         </p>
 
-        <p className="absolute top-10 right-4 text-2xl text-purple-500">
+        <p className="absolute top-10 right-4 text-2xl text-rose-700">
           {specialQues}
         </p>
 
         <p
           dangerouslySetInnerHTML={{ __html: question }}
-          className="p-7 bg-white rounded shadow "
+          className="p-7 bg-rose-200 rounded shadow "
         ></p>
         <div className="flex justify-center w-96 mt-8 space-x-20">
         <>
@@ -145,10 +161,21 @@ const GamePage = () => {
         }
         </div>
       </div>
+      <Popup
+        trigger={
+          <button className="m-11 bg-rose-500 focus:outline-none py-3 px-6 text-white rounded">
+            Use LifeLine
+          </button>
+        }
+        position="right center"
+      >
+        <div className="grid gap-4 p-3">
+          <button className={disable2?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable2} onClick={addtime}>Gain some time</button>
+          <button className={disable1?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable1} onClick={livesAdder}>A Cat has 8 lives, now you will have 4</button>
+        </div>
+      </Popup>
       <div className="absolute bottom-4 right-4">
-        <Button onClick={restartHandler} type="error">
-          Quit Game
-        </Button>
+        <Button onClick={restartHandler}>Quit Game</Button>
       </div>
     </>
   );
