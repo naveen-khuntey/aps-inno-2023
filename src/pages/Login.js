@@ -12,7 +12,9 @@ import {
 import { db, auth } from "../firebase";
 import DBfunctions from "../utils/db";
 import { collection } from "firebase/firestore";
+import img from "./images/GameOver.png";
 
+import * as Components from "./Components";
 
 function Login({ isAuth }) {
   const navigate = useNavigate();
@@ -138,14 +140,14 @@ function Login({ isAuth }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isSignup) {
+    if (isSignup) {
       setIsLoggingIn(true);
       signIn();
     } else {
       setIsRegistering(true);
       //BASIC VALIDATION
 
-      if (password !== confirmPassword) {
+      if (!isSignup && password !== confirmPassword) {
         setIsRegistering(false);
         alert("Passwords do not match. Try again!");
         setConfirmPassword("");
@@ -153,7 +155,7 @@ function Login({ isAuth }) {
       }
 
       let regexp = /^[6789]\d{9}$/;
-      if (!phone.match(regexp)) {
+      if (!isSignup && !phone.match(regexp)) {
         setIsRegistering(false);
         alert("Invalid phone number!");
         return;
@@ -188,81 +190,64 @@ return false;
 }
 
 
+//const [isSignIn, toggle] = useState(true);
   return (
-    <div className="font-mono bg-purple-50 min-h-screen ">
-      <h1 className="bg-purple-500 text-white p-4 text-2xl text-center uppercase">
-        {isSignup ? "SIGN UP" : "LOG IN"}
-      </h1>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col justify-center items-center mt-60">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your Email..."
-            className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password here..."
-            className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
-          />
-          {isSignup && (
-            <>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Enter password again"
-                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
-              />
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Phone number without +91 "
-                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
-              />
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username..."
-                className="py-2 px-4 outline-none rounded shadow w-64 mb-6"
-              />
-            </>
-          )}
-          {isSignup ? (
-            <>
-              <Button addClassNames="mb-6">
-                {isRegistering ? "Signing up" : "Signup"}
-              </Button>
-              <p
-                style={{ color: "#999", fontSize: "15px", cursor: "pointer" }}
-                onClick={() => toggleAuth()}
-                className="mb-10"
-              >
-                Already have an account?
-              </p>
-            </>
-          ) : (
-            <>
-              <Button addClassNames="mb-6">
-                {isLoggingIn ? "Logging in" : "Login"}
-              </Button>
-              <p
-                style={{ color: "#999", fontSize: "15px", cursor: "pointer" }}
-                onClick={() => toggleAuth()}
-              >
-                Don't have an account?
-              </p>
-            </>
-          )}
-        </div>
-      </form>
-    </div>
+  <div className="logreg">
+      {/* <div className="bg-image"></div> */}
+    <Components.Container>
+      <Components.SignUpContainer signingIn={isSignup}>
+        <Components.Form  autocomplete="off" onSubmit={handleSubmit}>
+          <Components.Title>Create Account</Components.Title>
+          <Components.Input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username" />
+          <Components.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
+          <Components.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
+          <Components.Input onChange={(e) => setConfirmPassword(e.target.value)} type="text" placeholder="Confirm Password" />
+          <Components.Input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Phone Number" />
+          <Components.Button>Sign Up</Components.Button>
+        </Components.Form>
+   
+      </Components.SignUpContainer>
+      <Components.SignInContainer signingIn={isSignup}>
+        <Components.Form  autocomplete="off" onSubmit={handleSubmit}>
+          <Components.Title>Sign in</Components.Title>
+          <Components.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" autocomplete="off"/>
+          <Components.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" autocomplete="off" />
+          <Components.Button  >Sign In</Components.Button>
+        </Components.Form>
+      </Components.SignInContainer>
+      <Components.OverlayContainer signingIn={isSignup}>
+       
+        <Components.Overlay signingIn={isSignup}>
+          <Components.LeftOverlayPanel signingIn={isSignup}>
+            <Components.Title>Welcome Back!</Components.Title>
+            <Components.Paragraph>
+              To keep connected with us please login with your credentials
+            </Components.Paragraph>
+            <Components.GhostButton onClick={() => {
+              setIsSignup(true)
+              setPassword("")
+              setEmail("")
+              }}>
+              Sign In
+            </Components.GhostButton>
+          </Components.LeftOverlayPanel>
+          <Components.RightOverlayPanel signingIn={isSignup}>
+            <Components.Title>Hey there!</Components.Title>
+            <Components.Paragraph>
+              If you don't have account, create here.
+            </Components.Paragraph>
+            <Components.GhostButton onClick={() =>{
+              setIsSignup(false)
+              setPassword("")
+              setEmail("")
+            }}>
+              Sign Up
+            </Components.GhostButton>
+          </Components.RightOverlayPanel>
+        </Components.Overlay>
+      </Components.OverlayContainer>
+    </Components.Container>
+  </div> 
   );
 }
 

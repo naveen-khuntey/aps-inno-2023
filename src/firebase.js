@@ -13,6 +13,7 @@ const firebaseConfig = {
   storageBucket: "innovision-game.appspot.com",
   messagingSenderId: "173552830436",
   appId: "1:173552830436:web:56fed770f71c624c33e9f1",
+  databaseURL: "https://innovision-game-default-rtdb.firebaseio.com/"
 };
 
 // Initialize Firebase
