@@ -5,10 +5,10 @@ import EndGamePage from "./EndGame";
 import FetchingGamePage from "./FetchingGamePage";
 import { useSelector } from "react-redux";
 import { START_GAME, FETCHING_GAME, GAME, END_GAME } from "../utils/constants";
+import "./Styles.css";
 
 const MainPage = () => {
   const currentStage = useSelector((state) => state.gameState.stage);
-  const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
 
   let displayedPage;
   switch (currentStage) {
@@ -29,10 +29,8 @@ const MainPage = () => {
   }
 
   return (
-    <div className="font-mono bg-purple-50 min-h-screen ">
-      <h1 className="bg-purple-500 text-white p-4 text-2xl text-center uppercase">
-        Quiz Game
-      </h1>
+    <div className="">
+
       {displayedPage}
     </div>
   );

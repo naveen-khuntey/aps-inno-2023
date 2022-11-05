@@ -1,14 +1,14 @@
 import React from "react";
 
-const Button = ({ children, onClick, type, addClassNames }) => {
+const Options = ({ children, onClick, type, addClassNames }) => {
   return (
     <button
       onClick={onClick}
-      className="btn"
+      className="options_btn"
     >
       {children}
     </button>
   );
 };
 
-export default Button;
+export default Options;

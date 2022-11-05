@@ -1,20 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { cancelFetchQuestions } from "../store/slices/gameState.slice";
-import Button from "../components/Button";
+import robo from "./images/robo.png";
+import gear from "./images/gear.png";
+import "./Styles.css";
 
 const FetchingGamePage = () => {
-  const dispatch = useDispatch();
-  const cancelGameHandler = () => {
-    dispatch(cancelFetchQuestions());
-  };
+
   return (
-    <div className="flex flex-col justify-center items-center mt-80">
-      <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mb-12">
-        <div className="w-12 h-12 bg-purple-200 rounded-full animate-bounce "></div>
+    <div className="loading_page">
+      <div className="nav">
+         <h2 class="" id="nav_head" data-text="THE TIMELESS SAGA"><span>THE TIMELESS SAGA</span></h2>
       </div>
-      <Button onClick={cancelGameHandler}>Cancel</Button>
-    </div>
+        <div className="loading">
+        <img className= 'robo' src={robo} />
+        <img className= 'gear' src={gear} />
+        </div>
+      </div>
   );
 };
 
