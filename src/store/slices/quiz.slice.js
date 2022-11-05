@@ -48,6 +48,9 @@ const quizSlice = createSlice({
     nextQuestion(state) {
       state.currentQuestionIndex += 1;
     },
+    addLives(state, action) {
+      state.lives += action.payload.extraLives;
+    },
   },
 });
 
@@ -56,6 +59,7 @@ export const {
   fetchQuestionsFail,
   answerQuestion,
   nextQuestion,
+  addLives,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

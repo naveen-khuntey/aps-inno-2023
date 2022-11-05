@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { answerQuestion } from "../store/slices/quiz.slice";
+import { addLives } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
 import { produceWithPatches } from "immer";
@@ -21,6 +22,8 @@ const GamePage = () => {
   const dispatch = useDispatch();
   const [timeLeft, setTimeLeft] = useState(12);
   const [fiftyfifty, activatefiftyfifty] = useState(false);
+  const [extratime, activateextratime] = useState(false);
+  const [extralife, activateextralife] = useState(false);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
@@ -34,20 +37,15 @@ const GamePage = () => {
   // console.log(options);
   const score = useSelector((state) => state.quiz.score);
 
-  const [uplives, setUplives]=useState(false);
-  const [disable1, setDisable1] = useState(true);
-  const [disable2, setDisable2] = useState(true);
 
-  const livesAdder =()=>{
-    setUplives(true);
-    setDisable1(false);
-  }
+
+  
 
   //const score = useSelector((state) => state.quiz.score);
   const currency = useSelector((state) => state.quiz.currency);
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   let lives = useSelector((state) => state.quiz.lives);
-  lives+=uplives?1:0;
+  // lives+=uplives?1:0;
 
   //Special Question
   const [x, setX] = useState(0);
@@ -71,14 +69,14 @@ const GamePage = () => {
       if (time !== -1) {
         setTimeLeft((prev) => prev - 1);
       } else {
-      answerHandler("Bleh");
+      answerHandler("Unanswered");
         resetTimer();
       }
     }, 1000);
 
     return () => {
       clearInterval(interval);
-      if (lives < 2) {
+      if (lives === 0) {
         dispatch(finishGame());
       }
     };
@@ -90,21 +88,36 @@ const GamePage = () => {
   };
 
   const addtime = () => {
-    time =20;
-    setTimeLeft(20);
-    setDisable2(false);
+    time = 20;
+    setTimeLeft((prev) => {
+      return (prev+time);
+    });
+  }
+
+  const livesAdder = async ()=>{
+    await dispatch(addLives({extraLives: 1}));
   }
 
   const answerHandler = async (answer) => {
-    let questionType = true;
+    let questionType = (specialQues === "Special Question!") ? true : false;
     let time_left = timeLeft;
     await dispatch(answerQuestion({ answer, time_left, questionType }));
     activatefiftyfifty(false);
+    activateextratime(false);
+    activateextralife(false);
     resetTimer();
   };
 
   const fiftyop = () => {
     activatefiftyfifty(true);
+  }
+  const extratimeop = () => {
+    activateextratime(true);
+    addtime();
+  }
+  const extralifeop = () => {
+    activateextralife(true);
+    livesAdder();
   }
 
   const restartHandler = () => {
@@ -152,12 +165,31 @@ const GamePage = () => {
           {/* <Button onClick={() => answerHandler("True")}>True</Button>
           <Button onClick={() => answerHandler("False")}>False</Button> */}
         </div>
+        {/* <button className={disable2?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable2} onClick={addtime}>Gain some time</button>
+          <button className={disable1?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable1} onClick={livesAdder}>A Cat has 8 lives, now you will have 4</button> */}
         <div className="fifty">
         {
           !fiftyfifty && <Button onClick={() => fiftyop()}>50-50</Button>
         }
         {
-          fiftyfifty && <Button  disabled onClick={() => fiftyop()}>50-50</Button>
+          fiftyfifty && <Button  disabled >50-50</Button>
+        }
+        </div>
+        <div className="fifty">
+        {
+          !extratime && <Button onClick={() => extratimeop()}>Extra Time</Button>
+        }
+        {
+          extratime && <Button  disabled>Extra Time</Button>
+        }
+        </div>
+        
+        <div className="fifty">
+        {
+          !extralife && <Button onClick={() => extralifeop()}>Extra Life</Button>
+        }
+        {
+          extralife && <Button  disabled >Extra Life</Button>
         }
         </div>
       </div>
@@ -170,8 +202,7 @@ const GamePage = () => {
         position="right center"
       >
         <div className="grid gap-4 p-3">
-          <button className={disable2?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable2} onClick={addtime}>Gain some time</button>
-          <button className={disable1?'bg-rose-500 hover:bg-rose-700 focus:outline-none py-3 px-6 text-white rounded':'bg-gray-400 focus:outline-none py-3 px-6 text-gray-300 rounded'} disabled={!disable1} onClick={livesAdder}>A Cat has 8 lives, now you will have 4</button>
+          
         </div>
       </Popup>
       <div className="absolute bottom-4 right-4">
