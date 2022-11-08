@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { getDatabase, ref,update } from "firebase/database";
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { restartGame } from "../store/slices/gameState.slice";
 import Button from "../components/Button";
@@ -9,24 +10,33 @@ import "./Styles.css";
 const EndGamePage = () => {
   const dispatch = useDispatch();
   const score = useSelector((state) => state.quiz.score);
-
+  const tottime = useSelector((state) => state.quiz.tottime);
+  const email = auth.currentUser.email;
+  const number = useSelector((state) => state.user.phone);
+  const username = useSelector((state) => state.user.username);
 function writeScore() {
 const db = getDatabase();
 const updatedScore={
+  email:email,
+  number: number,
   score:score,
+  time:tottime,
+  username: username
 }
   const updates = {};
-  updates['/users/' + auth.currentUser.uid+'/score/'] = updatedScore;
+  updates['/users/' + auth.currentUser.uid] = updatedScore;
   return update(ref(db), updates);
 }
 
 useEffect(()=>{
-writeScore();
+  writeScore();
 },[]);
 
-  const restartHandler = () => {
+  const restartHandler = async() => {
+    navigate("/home");
     dispatch(restartGame());
   };
+  const navigate = useNavigate();
   return (
     <div className="game-over">
       <div className="nav">
@@ -35,9 +45,9 @@ writeScore();
     <div className="game_score">
       <h1 className="hero glitch layers glow glow2 glow3 glow4 glow5">Game Over</h1>
       <h2 className="">
-        Your score is <span className="">{score}</span>
+        Your score is <span className="">{score}</span> and time is <span className="">{tottime}</span>
       </h2>
-      <Button onClick={restartHandler}>Try Again</Button>
+      <Button onClick={restartHandler}>Exit</Button>
       </div>
        <div className="mt-4 p-4">
         {/* {answers.map((answer) => (

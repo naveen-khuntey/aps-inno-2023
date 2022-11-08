@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { answerQuestion } from "../store/slices/quiz.slice";
 import { addLives } from "../store/slices/quiz.slice";
 import { finishGame } from "../store/slices/gameState.slice";
+import { Lifeline } from "../store/slices/quiz.slice";
 import Button from "../components/Button";
 import { produceWithPatches } from "immer";
 import "./Login.css";
@@ -11,7 +12,15 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Options from "../components/Options";
 import "./Styles.css";
+import fifty from "./images/50-50icon.png"
+import extime from "./images/hourglass-time-icon-extra-time.jpg"
+import life from "./images/life.jpg"
+import Warp from "./images/redss.mp4"
+import Flame from "./images/Flame1.mp4"
 import { FaHeart } from 'react-icons/fa';
+import Wimg from './images/redimg.png';
+import flip from './images/flip.png';
+import flameimg from './images/flameimg.png';
 import money from "./images/currency.png";
 
 //Index array of the special questions
@@ -22,13 +31,15 @@ for (let i = 0; i < 60; i++) {
   console.log(specialIndex[i]);
 }
 
-let time = 13;
+let time = 120;
 const GamePage = () => {
   const dispatch = useDispatch();
-  const [timeLeft, setTimeLeft] = useState(12);
+  const [timeLeft, setTimeLeft] = useState(120);
   const [fiftyfifty, activatefiftyfifty] = useState(false);
   const [extratime, activateextratime] = useState(false);
   const [extralife, activateextralife] = useState(false);
+  const [flipop, activateflipop] = useState(false);
+  const [nos, setNos] = useState(0);
   const question = useSelector(
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].question
   );
@@ -51,6 +62,13 @@ const GamePage = () => {
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   let lives = useSelector((state) => state.quiz.lives);
   // lives+=uplives?1:0;
+  console.log("Lives", lives);
+  const end = async() => {
+    await dispatch(finishGame());
+   }
+  if (lives === 0) {
+    end();
+  }
 
   //Special Question
   const [x, setX] = useState(0);
@@ -80,9 +98,7 @@ const GamePage = () => {
 
     return () => {
       clearInterval(interval);
-      if (lives === 0) {
-        dispatch(finishGame());
-      }
+      
     };
   }, [lives]);
 
@@ -94,14 +110,14 @@ const GamePage = () => {
   //   }, []);
 
   const resetTimer = () => {
-    time = 13;
-    setTimeLeft(13);
+    time = 120;
+    setTimeLeft(120);
   };
 
   const addtime = () => {
-    time = 20;
+    time+=20;
     setTimeLeft((prev) => {
-      return (prev+time);
+      return (prev+20);
     });
   }
 
@@ -116,18 +132,32 @@ const GamePage = () => {
     activatefiftyfifty(false);
     activateextratime(false);
     activateextralife(false);
+    activateflipop(false);
     resetTimer();
   };
 
+  const flipopfunc = async(answer) => {
+    const res = false;
+    setNos((prev) => {
+      return (prev+1);
+    })
+    let time_left = timeLeft;
+    await dispatch(answerQuestion({ answer, time_left, res }));
+    activateflipop(true);
+  }
+
 // <<<<<<< HEAD
-  const fiftyop = () => {
+  const fiftyop = async() => {
+    await dispatch(Lifeline({lifeline: "fifty"}));
     activatefiftyfifty(true);
   }
-  const extratimeop = () => {
+  const extratimeop = async() => {
+    await dispatch(Lifeline({lifeline: "time"}));
     activateextratime(true);
     addtime();
   }
-  const extralifeop = () => {
+  const extralifeop = async() => {
+    await dispatch(Lifeline({lifeline: "life"}));
     activateextralife(true);
     livesAdder();
   }
@@ -214,13 +244,28 @@ const GamePage = () => {
 // =======
   return (
     <>
-    <div className="game_page">
+    {/* <video src={Warp} class="video-container" loop autoplay muted></video> */}
+    {specialQues === "Special Question!" 
+      ? <div> 
+        <video id="background-video" autoPlay loop muted poster={Wimg}>
+          <source src={Warp} type="video/mp4"/>
+        </video>
+        </div>
+      : <div></div>
+    }
+    {specialQues !== "Special Question!" 
+      ? <div> 
+        <video id="background-video" autoPlay loop muted poster={flameimg}>
+          <source src={Flame} type="video/mp4"/>
+        </video>
+        </div>
+      : <div></div>
+    }
+    <div className={specialQues === "Special Question!" ? "special_page" : "special_page"}>
     <div className="nav">
          <h2 class="" id="nav_head" data-text="THE TIMELESS SAGA"><span>THE TIMELESS SAGA</span></h2>
         <div className="helpers">
-          <p className="absolute top-10 right-4 text-2xl text-rose-700">
-            {specialQues}
-          </p>
+          
           <p className="">
           <FaHeart className="fa_helpers heart"/> </p> <div className="fa_helpers helpers_no">{lives}</div>
           
@@ -251,7 +296,8 @@ const GamePage = () => {
     </p>
     <div className="question_part">
         <div className="questions">
-          Question {currentIndex+1} :
+          {specialQues === "Special Question!" ? <h1 className="spq">Special Question!</h1> : <div></div>}
+          Question {currentIndex+1-nos} :
           <p
             dangerouslySetInnerHTML={{ __html: question }}
             className=""
@@ -270,7 +316,7 @@ const GamePage = () => {
               return(
               <div className="options">
                 <Options onClick={() => answerHandler(choice)}></Options>
-                <h2>{choice}</h2>
+                <h2 className={choice === correctanswer ? "op right" : "op wrong"} onClick={() => answerHandler(choice)}>{choice}</h2>
               </div>
               );
             })}
@@ -280,11 +326,11 @@ const GamePage = () => {
             <>
             <div className="options">
               <Options className="options" onClick={() => answerHandler(wrong[0])}></Options>
-              <h2>{wrong[0]}</h2>
+              <h2 className="op wrong" onClick={() => answerHandler(wrong[0])}>{wrong[0]}</h2>
             </div>
             <div className="options">
               <Options className="options" onClick={() => answerHandler(correctanswer)}></Options>
-              <h2>{correctanswer}</h2>
+              <h2 className="op right" onClick={() => answerHandler(correctanswer)}>{correctanswer}</h2>
             </div>
             </>
             }
@@ -293,52 +339,61 @@ const GamePage = () => {
           
         </div>
       </div>
+      {specialQues !== "Special Question!" ?
         <div className="lifelines">
             <div className="lifeline">
+            
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb1">+</h1></Link> */}
-              <div className="lifeline_btn_container">
+              {/* <div className="lifeline_btn_container"> */}
                 {
-                  !fiftyfifty && <Link onClick={() => fiftyop()}><h1 className="lifeline_btn llb1">+</h1></Link>
+                  !fiftyfifty && (currency>=5) && <Link onClick={() => fiftyop()}><img src={fifty} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  fiftyfifty && <Link  disabled ><h1 className="lifeline_btn llb1">+</h1></Link>
+                  (fiftyfifty || (currency<5)) && <Link  disabled ><img src={fifty} className="Logodisabled" alt="Logo" /></Link>
                 }
-              </div>
+              {/* </div> */}
               <br />
             </div>
             <h3 className="pts">20 pts</h3>
             <div className="lifeline">
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb2">+</h1></Link> */}
-              <div className="lifeline_btn_container">
+              {/* <div className="lifeline_btn_container"> */}
                 {
-                  !extratime && <Link onClick={() => extratimeop()}><h1 className="lifeline_btn llb2">+</h1></Link>
+                  !extratime && (currency>=7) && <Link onClick={() => extratimeop()}><img src={extime} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  extratime && <Link  disabled><h1 className="lifeline_btn llb2">+</h1></Link>
+                  (extratime || (currency<7)) && <Link  disabled><img src={extime} className="Logodisabled" alt="Logo" /></Link>
                 }
-              </div>
+              {/* </div> */}
               <br />
             </div>
             <h3 className="pts">20 pts</h3>
             <div className="lifeline">
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb3">+</h1></Link> */}
-              <div className="lifeline_btn_container">
+              {/* <div className="lifeline_btn_container"> */}
                 {
-                  !extralife && <Link onClick={() => extralifeop()}><h1 className="lifeline_btn llb3">+</h1></Link>
+                  !extralife && (currency>=9) && <Link onClick={() => extralifeop()}><img src={life} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  extralife && <Link  disabled ><h1 className="lifeline_btn llb3">+</h1></Link>
+                  (extralife || (currency<9)) && <Link  disabled ><img src={life} className="Logodisabled" alt="Logo" /></Link>
                 }
-                </div>
+                {/* </div> */}
               <br />
             </div>
             <h3 className="pts">30 pts</h3>
             <div className="lifeline">
-              <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb4">+</h1></Link>
+                {
+                  !flipop && (currency>=11) && <Link onClick={() => flipopfunc("Unanswered")}><img src={flip} className="Logo1" alt="Logo" /></Link>
+                }
+                {
+                  (flipop || (currency<11)) && <Link  disabled ><img src={flip} className="Logodisabled" alt="Logo" /></Link>
+                }
               <br />
             </div>
             <h3 className="pts">40 pts</h3>
         </div>
+        : <div></div>
+      }
     </div>
   
   </>
