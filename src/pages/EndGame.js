@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import { getDatabase, ref,update } from "firebase/database";
+import { getDatabase, ref,update, get, child } from "firebase/database";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,25 +14,42 @@ const EndGamePage = () => {
   const email = auth.currentUser.email;
   const number = useSelector((state) => state.user.phone);
   const username = useSelector((state) => state.user.username);
-function writeScore() {
-const db = getDatabase();
-const updatedScore={
-  email:email,
-  number: number,
-  score:score,
-  time:tottime,
-  username: username
-}
-  const updates = {};
-  updates['/users/' + auth.currentUser.uid] = updatedScore;
-  return update(ref(db), updates);
-}
+  const writeScore = async() => {
+      const db = getDatabase();
+      const dbRef = ref(db);
+      let logins = 1;
+      let s = 0;
+      let t = 0;
+      await get(child(dbRef, `users/${auth.currentUser.uid}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          const data = snapshot.val();
+          logins = data.logins+1;
+          s = data.score;
+          t = data.tottime
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+      const updatedScore={
+        email:email,
+        number: number,
+        score:score,
+        time:tottime,
+        username: username,
+        logins: logins
+      }
+        const updates = {};
+        updates['/users/' + auth.currentUser.uid] = updatedScore;
+        return update(ref(db), updates);
+  }
 
-useEffect(()=>{
-  writeScore();
-},[]);
+  
 
   const restartHandler = async() => {
+    await writeScore();
     navigate("/home");
     dispatch(restartGame());
   };
