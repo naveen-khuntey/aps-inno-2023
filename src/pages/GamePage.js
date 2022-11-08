@@ -73,7 +73,7 @@ const GamePage = () => {
   //Special Question
   const [x, setX] = useState(0);
   const [specialQues, setspcialQues] = useState("");
-  const wrongFinder = (value) => value !== correctanswer;
+  const wrongFinder = (value) => value !== options[correctanswer];
   const wrong = options.filter(wrongFinder);
   useEffect(()=>{
     if(currentIndex===specialIndex[x]){
@@ -124,10 +124,20 @@ const GamePage = () => {
   const livesAdder = async ()=>{
     await dispatch(addLives({extraLives: 1}));
   }
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 
   const answerHandler = async (answer) => {
     let questionType = (specialQues === "Special Question!") ? true : false;
     let time_left = timeLeft;
+    for (let i = 0; i < 2; i++) {
+        // console.log(`Waiting ${i} seconds...`);
+        await sleep(i * 1000);
+    }
+    console.log('Done');
     await dispatch(answerQuestion({ answer, time_left, questionType }));
     activatefiftyfifty(false);
     activateextratime(false);
@@ -316,7 +326,7 @@ const GamePage = () => {
               return(
               <div className="options">
                 <Options onClick={() => answerHandler(choice)}></Options>
-                <h2 className={choice === correctanswer ? "op right" : "op wrong"} onClick={() => answerHandler(choice)}>{choice}</h2>
+                <h2 className={choice === options[correctanswer] ? "op right" : "op wrong"} onClick={() => answerHandler(choice)}>{choice}</h2>
               </div>
               );
             })}
@@ -329,8 +339,8 @@ const GamePage = () => {
               <h2 className="op wrong" onClick={() => answerHandler(wrong[0])}>{wrong[0]}</h2>
             </div>
             <div className="options">
-              <Options className="options" onClick={() => answerHandler(correctanswer)}></Options>
-              <h2 className="op right" onClick={() => answerHandler(correctanswer)}>{correctanswer}</h2>
+              <Options className="options" onClick={() => answerHandler(options[correctanswer])}></Options>
+              <h2 className="op right" onClick={() => answerHandler(options[correctanswer])}>{options[correctanswer]}</h2>
             </div>
             </>
             }

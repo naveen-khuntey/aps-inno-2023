@@ -10,7 +10,7 @@ function* takeQuestion() {
   yield take(answerQuestion.type);
 }
 function* answersSaga() {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 50; i++) {
     // yield race({
     //   delay: delay(12000),
     //   done: takeQuestion()
