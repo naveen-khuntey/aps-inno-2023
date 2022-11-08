@@ -41,24 +41,24 @@ const quizSlice = createSlice({
     answerQuestion(state, action) {
       const currentQuestion = state.questions[state.currentQuestionIndex];
 
-      state.score += action.payload.answer === currentQuestion.correct_answer ? 1 : 0;
+      state.score += action.payload.answer === currentQuestion.option[currentQuestion.correct_answer] ? 1 : 0;
       // state.lives -= action.payload.answer === currentQuestion.correct_answer ? 0 : 1;
 
       state.lives -=
         (action.payload.questionType === true) || (action.payload.questionType===false
-          && action.payload.answer === currentQuestion.correct_answer)
+          && action.payload.answer === currentQuestion.option[currentQuestion.correct_answer])
           ? 0
           : 1;
 
       state.currency +=
         action.payload.questionType &&
-        action.payload.answer === currentQuestion.correct_answer
+        action.payload.answer === currentQuestion.option[currentQuestion.correct_answer]
           ? action.payload.time_left
           : 0;
 
 
       state.tottime +=
-        action.payload.answer === currentQuestion.correct_answer
+        action.payload.answer === currentQuestion.option[currentQuestion.correct_answer]
         ? action.payload.time_left
         : 0;
 
@@ -68,8 +68,8 @@ const quizSlice = createSlice({
       state.answers.push({
         question: currentQuestion.question,
         answer: action.payload.answer,
-        correctAnswer: currentQuestion.correct_answer,
-        isCorrect: action.payload.answer === currentQuestion.correct_answer,
+        correctAnswer: currentQuestion.option[currentQuestion.correct_answer],
+        isCorrect: action.payload.answer === currentQuestion.option[currentQuestion.correct_answer],
       });
     },
     nextQuestion(state) {
