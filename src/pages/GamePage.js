@@ -47,10 +47,10 @@ const GamePage = () => {
     (state) => state.quiz.questions[state.quiz.currentQuestionIndex].option
   );
   const correctanswer = useSelector(
-    (state) => state.quiz.questions[state.quiz.currentQuestionIndex].correct_answer
+    (state) => parseInt(state.quiz.questions[state.quiz.currentQuestionIndex].correct_answer, 10)
   );
   
-  // console.log(options);
+  console.log(correctanswer);
   const score = useSelector((state) => state.quiz.score);
 
 
