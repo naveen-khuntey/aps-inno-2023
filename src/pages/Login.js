@@ -13,7 +13,7 @@ import { db, auth } from "../firebase";
 import DBfunctions from "../utils/db";
 import { collection } from "firebase/firestore";
 import img from "./images/GameOver.png";
-
+import Login_img from "./images/login.png";
 import * as Components from "./Components";
 
 function Login({ isAuth }) {
@@ -197,11 +197,12 @@ return false;
     <Components.Container>
       <Components.SignUpContainer signingIn={isSignup}>
         <Components.Form  autocomplete="off" onSubmit={handleSubmit}>
-          <Components.Title>Create Account</Components.Title>
+        <h1 id="head_login">Create Account</h1>
+
           <Components.Input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username" />
           <Components.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" />
           <Components.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
-          <Components.Input onChange={(e) => setConfirmPassword(e.target.value)} type="text" placeholder="Confirm Password" />
+          <Components.Input onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" />
           <Components.Input onChange={(e) => setPhone(e.target.value)} type="text" placeholder="Phone Number" />
           <Components.Button>Sign Up</Components.Button>
         </Components.Form>
@@ -209,7 +210,7 @@ return false;
       </Components.SignUpContainer>
       <Components.SignInContainer signingIn={isSignup}>
         <Components.Form  autocomplete="off" onSubmit={handleSubmit}>
-          <Components.Title>Sign in</Components.Title>
+        <h1 id="head_login">Sign in</h1>
           <Components.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" autocomplete="off"/>
           <Components.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" autocomplete="off" />
           <Components.Button  >Sign In</Components.Button>
@@ -218,11 +219,16 @@ return false;
       <Components.OverlayContainer signingIn={isSignup}>
        
         <Components.Overlay signingIn={isSignup}>
-          <Components.LeftOverlayPanel signingIn={isSignup}>
-            <Components.Title>Welcome Back!</Components.Title>
-            <Components.Paragraph>
-              To keep connected with us please login with your credentials
-            </Components.Paragraph>
+          <Components.LeftOverlayPanel className="login_bg" style={{ 
+              background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${Login_img})`, 
+              backgroundPosition: '0px ',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover', 
+              }} signingIn={isSignup}>
+              <h1 id="head_login">Welcome Back!</h1>
+              <p>
+                To keep connected with us please login with your credentials
+              </p>
             <Components.GhostButton onClick={() => {
               setIsSignup(true)
               setPassword("")
@@ -231,11 +237,17 @@ return false;
               Sign In
             </Components.GhostButton>
           </Components.LeftOverlayPanel>
-          <Components.RightOverlayPanel signingIn={isSignup}>
-            <Components.Title>Hey there!</Components.Title>
-            <Components.Paragraph>
+          <Components.RightOverlayPanel className="login_bg" style={{
+            background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${Login_img})`, 
+            backgroundPosition: '0px ',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',  
+            // backgroundImage: `url(${Login_img})` 
+            }} signingIn={isSignup}>
+            <h1 id="head_login">Hey there!</h1>
+            <p>
               If you don't have account, create here.
-            </Components.Paragraph>
+            </p>
             <Components.GhostButton onClick={() =>{
               setIsSignup(false)
               setPassword("")
