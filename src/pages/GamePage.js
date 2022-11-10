@@ -28,7 +28,7 @@ import money from "./images/currency.png";
 const specialIndex = [];
 for (let i = 0; i < 60; i++) {
   specialIndex[i] = Math.floor(Math.random() * 5) + 5 * i;
-  console.log(specialIndex[i]);
+  // console.log(specialIndex[i]);
 }
 
 let time = 120;
@@ -50,7 +50,7 @@ const GamePage = () => {
     (state) => parseInt(state.quiz.questions[state.quiz.currentQuestionIndex].correct_answer, 10)
   );
   
-  console.log(correctanswer);
+  // console.log(correctanswer);
   const score = useSelector((state) => state.quiz.score);
 
 
@@ -62,7 +62,7 @@ const GamePage = () => {
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   let lives = useSelector((state) => state.quiz.lives);
   // lives+=uplives?1:0;
-  console.log("Lives", lives);
+  // console.log("Lives", lives);
   const end = async() => {
     await dispatch(finishGame());
    }
@@ -115,9 +115,9 @@ const GamePage = () => {
   };
 
   const addtime = () => {
-    time+=20;
+    time+=30;
     setTimeLeft((prev) => {
-      return (prev+20);
+      return (prev+30);
     });
   }
 
@@ -137,7 +137,7 @@ const GamePage = () => {
         // console.log(`Waiting ${i} seconds...`);
         await sleep(i * 1000);
     }
-    console.log('Done');
+    // console.log('Done');
     await dispatch(answerQuestion({ answer, time_left, questionType }));
     activatefiftyfifty(false);
     activateextratime(false);
@@ -350,57 +350,60 @@ const GamePage = () => {
         </div>
       </div>
       {specialQues !== "Special Question!" ?
+      <div>
+        <h1 className="life">LIFELINES</h1>
         <div className="lifelines">
             <div className="lifeline">
             
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb1">+</h1></Link> */}
               {/* <div className="lifeline_btn_container"> */}
                 {
-                  !fiftyfifty && (currency>=5) && <Link onClick={() => fiftyop()}><img src={fifty} className="Logo1" alt="Logo" /></Link>
+                  !fiftyfifty && (currency>=60) && <Link onClick={() => fiftyop()}><img src={fifty} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  (fiftyfifty || (currency<5)) && <Link  disabled ><img src={fifty} className="Logodisabled" alt="Logo" /></Link>
+                  (fiftyfifty || (currency<60)) && <Link  disabled ><img src={fifty} className="Logodisabled" alt="Logo" /></Link>
                 }
               {/* </div> */}
               <br />
             </div>
-            <h3 className="pts">20 pts</h3>
+            <h3 className="pts">60 <img className= "fa_helpers lifemoney" style={{height: "16px", width : "16px"}} src={money} /></h3>
             <div className="lifeline">
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb2">+</h1></Link> */}
               {/* <div className="lifeline_btn_container"> */}
                 {
-                  !extratime && (currency>=7) && <Link onClick={() => extratimeop()}><img src={extime} className="Logo1" alt="Logo" /></Link>
+                  !extratime && (currency>=40) && <Link onClick={() => extratimeop()}><img src={extime} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  (extratime || (currency<7)) && <Link  disabled><img src={extime} className="Logodisabled" alt="Logo" /></Link>
+                  (extratime || (currency<40)) && <Link  disabled><img src={extime} className="Logodisabled" alt="Logo" /></Link>
                 }
               {/* </div> */}
               <br />
             </div>
-            <h3 className="pts">20 pts</h3>
+            <h3 className="pts">40 <img className= "fa_helpers lifemoney" style={{height: "16px", width : "16px"}} src={money} /></h3>
             <div className="lifeline">
               {/* <Link className="lifeline_btn_container"><h1 className="lifeline_btn llb3">+</h1></Link> */}
               {/* <div className="lifeline_btn_container"> */}
                 {
-                  !extralife && (currency>=9) && <Link onClick={() => extralifeop()}><img src={life} className="Logo1" alt="Logo" /></Link>
+                  !extralife && (currency>=80) && <Link onClick={() => extralifeop()}><img src={life} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  (extralife || (currency<9)) && <Link  disabled ><img src={life} className="Logodisabled" alt="Logo" /></Link>
+                  (extralife || (currency<80)) && <Link  disabled ><img src={life} className="Logodisabled" alt="Logo" /></Link>
                 }
                 {/* </div> */}
               <br />
             </div>
-            <h3 className="pts">30 pts</h3>
+            <h3 className="pts">80 <img className= "fa_helpers lifemoney" style={{height: "16px", width : "16px"}} src={money} /></h3>
             <div className="lifeline">
                 {
-                  !flipop && (currency>=11) && <Link onClick={() => flipopfunc("Unanswered")}><img src={flip} className="Logo1" alt="Logo" /></Link>
+                  !flipop && (currency>=40) && <Link onClick={() => flipopfunc("Unanswered")}><img src={flip} className="Logo1" alt="Logo" /></Link>
                 }
                 {
-                  (flipop || (currency<11)) && <Link  disabled ><img src={flip} className="Logodisabled" alt="Logo" /></Link>
+                  (flipop || (currency<40)) && <Link  disabled ><img src={flip} className="Logodisabled" alt="Logo" /></Link>
                 }
               <br />
             </div>
-            <h3 className="pts">40 pts</h3>
+            <h3 className="pts">40 <img className= "fa_helpers lifemoney" style={{height: "16px", width : "16px"}} src={money} /></h3>
+        </div>
         </div>
         : <div></div>
       }

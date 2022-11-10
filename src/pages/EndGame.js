@@ -22,7 +22,7 @@ const EndGamePage = () => {
       let t = 0;
       await get(child(dbRef, `users/${auth.currentUser.uid}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
+          // console.log(snapshot.val());
           const data = snapshot.val();
           logins = data.logins+1;
           s = data.score;
@@ -50,7 +50,7 @@ const EndGamePage = () => {
 
   const restartHandler = async() => {
     await writeScore();
-    navigate("/home");
+    navigate("/home753778214125442A462D4A614E645267556B58703273357638792F423F4528482B4B6250655368566D597133743677397A24432646294A404E635166546A576E5A7234753778214125442A472D4B6150645367556B58703273357638792F423F4528482B4D6251655468576D597133743677397A24432646294A404E635266556A586E327234753778214125442A472D4B6150645367566B59703373367638792F423F4528482B4D6251655468576D5A7134743777217A24432646294A404E635266556A586E3272357538782F413F442A472D4B6150645367566B59703373367639792442264529482B4D6251655468576D5A7134743777217A25432A462D4A");
     dispatch(restartGame());
   };
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const EndGamePage = () => {
     <div className="game_score">
       <h1 className="hero glitch layers glow glow2 glow3 glow4 glow5">Game Over</h1>
       <h2 className="">
-        Your score is <span className="">{score}</span> and time is <span className="">{tottime}</span>
+        Your score is <span className="">{score}</span>
       </h2>
       <Button onClick={restartHandler}>Exit</Button>
       </div>

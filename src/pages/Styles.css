@@ -931,8 +931,8 @@
       background: rgba(22, 27, 51, 0.75);
       border: 5px solid #ffffff;
       width: 9%;
-      height: 425px;
-      margin: 160px 20px 0;
+      height: 450px;
+      margin: 110px 20px 0;
       opacity: 0.9;
       float: left;
       color: white;
@@ -980,8 +980,8 @@
     }
 
     .pts {
-      font-size: 13px;
-      margin: 5px auto;
+      font-size: 18px;
+      /* margin: 1px; */
       display: flex;
       justify-content: center;
     }
@@ -1132,4 +1132,16 @@
         -10px 0 80px royalblue,
         10px 0 80px rgb(3, 50, 50);
         color: #000000;
+    }
+    .life{
+      color: white;
+      font-size: xx-large !important;
+      position: relative;
+      top: 110px;
+      left: 20px;
+      width: 1500px !important;
+    }
+    .lifemoney{
+      position: relative;
+      margin: 5px;
     }
