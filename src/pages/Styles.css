@@ -18,6 +18,20 @@
   h2 {
     margin: 0;
   }
+  ul {
+    list-style: none; /* Remove default bullets */
+    text-align: left;
+  }
+  
+  ul li::before {
+    margin-bottom: 15px;
+    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: white; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 2em; /* Also needed for space (tweak if needed) */
+    margin-left: 2em; /* Also needed for space (tweak if needed) */
+  }
   
   a {
     color: #ccc;
@@ -805,6 +819,7 @@
         height: 80vh;
         left: 10.5vw;
         top: 50px;
+        overflow-y: scroll;
         z-index: 2;
         width: 80%;
         padding: 20px;
@@ -1144,4 +1159,14 @@
     .lifemoney{
       position: relative;
       margin: 5px;
+    }
+
+    .Logostart{
+      background-color: white;
+      display: inline;
+      position: relative;
+      top: 0%;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
     }
