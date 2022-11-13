@@ -50,7 +50,7 @@ const GamePage = () => {
     (state) => parseInt(state.quiz.questions[state.quiz.currentQuestionIndex].correct_answer, 10)
   );
   
-  console.log(correctanswer);
+  // console.log(correctanswer);
   const score = useSelector((state) => state.quiz.score);
 
 
@@ -62,7 +62,7 @@ const GamePage = () => {
   const currentIndex = useSelector((state) => state.quiz.currentQuestionIndex);
   let lives = useSelector((state) => state.quiz.lives);
   // lives+=uplives?1:0;
-  console.log("Lives", lives);
+  // console.log("Lives", lives);
   const end = async() => {
     await dispatch(finishGame());
    }
