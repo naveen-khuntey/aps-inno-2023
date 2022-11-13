@@ -29,11 +29,11 @@ const quizSlice = createSlice({
     },
     Lifeline(state, action){
       if(action.payload.lifeline === "fifty"){
-        state.currency -= 60;
-      }else if(action.payload.lifeline === "time"){
         state.currency -= 40;
+      }else if(action.payload.lifeline === "time"){
+        state.currency -= 20;
       }else if(action.payload.lifeline === "life"){
-        state.currency -= 80;
+        state.currency -= 100;
       }else{
         state.currency -= 40;
       }
