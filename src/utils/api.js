@@ -1,4 +1,4 @@
-const apiUrl = "https://aps-inno.herokuapp.com/Questions";
+const apiUrl = "http://localhost:3333/Questions";
 
 
 function shuffle(array) {
