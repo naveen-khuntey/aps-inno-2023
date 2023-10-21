@@ -7,16 +7,16 @@
   backdrop-filter: (10px);
 }
 body .logreg {
-   background-image: url("./images/background12.jpg"); 
+   /* background-image: url("./images/background12.jpg");  */
    /* height: 100vh;
    width: 100vw; */
   backdrop-filter: blur(15px);
   background-color: #49476c; 
-  /* background: linear-gradient(309deg, 
+  background: linear-gradient(309deg, 
   rgba(7,13,89,1) 10%, 
   rgba(41,5,52,1) 38%, 
   rgba(2,0,36,1) 66% 
-  ); */
+  );
   display: flex;
   justify-content: center;
   align-items: center;
