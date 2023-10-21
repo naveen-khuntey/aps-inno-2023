@@ -1,1172 +1,1172 @@
-
 /* Home Page */
 
 #home {
-    color: #ccc;
-    background: #111;
-    font-family: sans-serif;
-    background: url('images/front-bg.jpg')
-      center no-repeat;
-    background-size: cover;
-    backdrop-filter: blur(1px);
-    height:100vh;
-    display: flex;
-    justify-content: center;
-  }
-  
-  h1,
-  h2 {
-    margin: 0;
-  }
-  ul {
-    list-style: none; /* Remove default bullets */
-    text-align: left;
-  }
-  
-  ul li::before {
-    margin-bottom: 15px;
-    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: white; /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 2em; /* Also needed for space (tweak if needed) */
-    margin-left: 2em; /* Also needed for space (tweak if needed) */
-  }
-  
-  a {
-    color: #ccc;
-  }
-  
-  section {
-    padding: 20px;
-  }
-  
-  .hero {
-    font-size: clamp(40px, 10vw, 30px);
-    line-height: 1;
-    display: inline-block;
-    color: #fff;
-    z-index: 2;
-    letter-spacing: 1px;
-  
-    /* Bright things in dark environments usually cast that light, giving off a glow */
-    filter: drop-shadow(0 1px 3px);
-  }
-  
-  .demo {
-    height: 30px;
-    background: #fff;
-  }
-  
-  .layers {
-    position: relative;
-  }
+  font-family: sans-serif;
+  background: linear-gradient(
+    309deg,
+    rgba(7, 13, 89, 1) 0%,
+    rgba(41, 5, 52, 1) 28%,
+    rgba(2, 0, 36, 1) 61%
+  );
 
-  @font-face {
-    font-family: 'MyWebFont';
-    src: url(font/glitched.otf);
-  }
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+body {
+  background-color: rgba(2, 0, 36, 1);
+}
 
-  #head{
-    height: 84px;
-    font-family: 'MyWebFont', Fallback, sans-serif;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 74px;
-    }
+#floating-img {
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
 
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 20px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
+}
 
-  .glow {
-    color:#0d2d52;
-      color: white;
-      text-shadow: 1px 1px 8px rgb(255, 255, 255), 0 0 25px blue, 0 0 30px darkblue;
-  }
+h1,
+h2 {
+  margin: 0;
+}
+ul {
+  list-style: none; /* Remove default bullets */
+  text-align: left;
+}
 
-  .glow2{
-    text-shadow: 0 0 7px #ffffff, 0 0 7px #0000FF;
-  }
-  @-webkit-keyframes glow {
-    from {
-      text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-    }
-    to {
-      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-  }
+ul li::before {
+  margin-bottom: 15px;
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: white; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 2em; /* Also needed for space (tweak if needed) */
+  margin-left: 2em; /* Also needed for space (tweak if needed) */
+}
 
-  .layers::before,
-  .layers::after {
-    content: attr(data-text);
-    position: absolute;
-    width: 110%;
-    z-index: -1;
+a {
+  color: #ccc;
+}
+
+/* section {
+  padding: 20px;
+} */
+
+.hero {
+  font-size: clamp(40px, 10vw, 30px);
+  line-height: 1;
+  display: inline-block;
+  color: #fff;
+  z-index: 2;
+  letter-spacing: 1px;
+
+  /* Bright things in dark environments usually cast that light, giving off a glow */
+  filter: drop-shadow(0 1px 3px);
+}
+
+.demo {
+  height: 30px;
+  background: #fff;
+}
+
+.layers {
+  position: relative;
+}
+
+@font-face {
+  font-family: "MyWebFont";
+  src: url(font/glitched.otf);
+}
+
+#head {
+  height: 84px;
+  font-family: "MyWebFont", Fallback, sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 74px;
+}
+
+.glow {
+  color: #0d2d52;
+  color: white;
+  text-shadow: 1px 1px 8px rgb(255, 255, 255), 0 0 25px blue, 0 0 30px darkblue;
+}
+
+.glow2 {
+  text-shadow: 0 0 7px #ffffff, 0 0 7px #0000ff;
+}
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff, 0 0 30px #e60073,
+      0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
   }
-  
-  .layers::before {
-    top: 10px;
-    left: 15px;
-    color: #e0287d;
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
+      0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
   }
-  
-  .layers::after {
-    top: 5px;
-    left: -10px;
-    color: #1bc7fb;
-  }
-  
-  .single-path {
+}
+
+.layers::before,
+.layers::after {
+  content: attr(data-text);
+  position: absolute;
+  width: 110%;
+  z-index: -1;
+}
+
+.layers::before {
+  top: 10px;
+  left: 15px;
+  color: #e0287d;
+}
+
+.layers::after {
+  top: 5px;
+  left: -10px;
+  color: #1bc7fb;
+}
+
+.single-path {
+  clip-path: polygon(
+    0% 12%,
+    53% 12%,
+    53% 26%,
+    25% 26%,
+    25% 86%,
+    31% 86%,
+    31% 0%,
+    53% 0%,
+    53% 84%,
+    92% 84%,
+    92% 82%,
+    70% 82%,
+    70% 29%,
+    78% 29%,
+    78% 65%,
+    69% 65%,
+    69% 66%,
+    77% 66%,
+    77% 45%,
+    85% 45%,
+    85% 26%,
+    97% 26%,
+    97% 28%,
+    84% 28%,
+    84% 34%,
+    54% 34%,
+    54% 89%,
+    30% 89%,
+    30% 58%,
+    83% 58%,
+    83% 5%,
+    68% 5%,
+    68% 36%,
+    62% 36%,
+    62% 1%,
+    12% 1%,
+    12% 34%,
+    60% 34%,
+    60% 57%,
+    98% 57%,
+    98% 83%,
+    1% 83%,
+    1% 53%,
+    91% 53%,
+    91% 84%,
+    8% 84%,
+    8% 83%,
+    4% 83%
+  );
+}
+
+.paths {
+  animation: paths 5s step-end infinite;
+}
+
+@keyframes paths {
+  0% {
     clip-path: polygon(
-      0% 12%,
-      53% 12%,
-      53% 26%,
-      25% 26%,
-      25% 86%,
-      31% 86%,
-      31% 0%,
-      53% 0%,
-      53% 84%,
-      92% 84%,
-      92% 82%,
-      70% 82%,
-      70% 29%,
-      78% 29%,
-      78% 65%,
-      69% 65%,
-      69% 66%,
-      77% 66%,
-      77% 45%,
-      85% 45%,
-      85% 26%,
-      97% 26%,
-      97% 28%,
-      84% 28%,
-      84% 34%,
-      54% 34%,
-      54% 89%,
-      30% 89%,
-      30% 58%,
-      83% 58%,
-      83% 5%,
-      68% 5%,
-      68% 36%,
-      62% 36%,
-      62% 1%,
-      12% 1%,
-      12% 34%,
-      60% 34%,
-      60% 57%,
-      98% 57%,
-      98% 83%,
-      1% 83%,
-      1% 53%,
-      91% 53%,
-      91% 84%,
-      8% 84%,
-      8% 83%,
-      4% 83%
+      0% 43%,
+      83% 43%,
+      83% 22%,
+      23% 22%,
+      23% 24%,
+      91% 24%,
+      91% 26%,
+      18% 26%,
+      18% 83%,
+      29% 83%,
+      29% 17%,
+      41% 17%,
+      41% 39%,
+      18% 39%,
+      18% 82%,
+      54% 82%,
+      54% 88%,
+      19% 88%,
+      19% 4%,
+      39% 4%,
+      39% 14%,
+      76% 14%,
+      76% 52%,
+      23% 52%,
+      23% 35%,
+      19% 35%,
+      19% 8%,
+      36% 8%,
+      36% 31%,
+      73% 31%,
+      73% 16%,
+      1% 16%,
+      1% 56%,
+      50% 56%,
+      50% 8%
     );
   }
-  
-  .paths {
-    animation: paths 5s step-end infinite;
-  }
-  
-  @keyframes paths {
-    0% {
-      clip-path: polygon(
-        0% 43%,
-        83% 43%,
-        83% 22%,
-        23% 22%,
-        23% 24%,
-        91% 24%,
-        91% 26%,
-        18% 26%,
-        18% 83%,
-        29% 83%,
-        29% 17%,
-        41% 17%,
-        41% 39%,
-        18% 39%,
-        18% 82%,
-        54% 82%,
-        54% 88%,
-        19% 88%,
-        19% 4%,
-        39% 4%,
-        39% 14%,
-        76% 14%,
-        76% 52%,
-        23% 52%,
-        23% 35%,
-        19% 35%,
-        19% 8%,
-        36% 8%,
-        36% 31%,
-        73% 31%,
-        73% 16%,
-        1% 16%,
-        1% 56%,
-        50% 56%,
-        50% 8%
-      );
-    }
-  
-    5% {
-      clip-path: polygon(
-        0% 29%,
-        44% 29%,
-        44% 83%,
-        94% 83%,
-        94% 56%,
-        11% 56%,
-        11% 64%,
-        94% 64%,
-        94% 70%,
-        88% 70%,
-        88% 32%,
-        18% 32%,
-        18% 96%,
-        10% 96%,
-        10% 62%,
-        9% 62%,
-        9% 84%,
-        68% 84%,
-        68% 50%,
-        52% 50%,
-        52% 55%,
-        35% 55%,
-        35% 87%,
-        25% 87%,
-        25% 39%,
-        15% 39%,
-        15% 88%,
-        52% 88%
-      );
-    }
-  
-    30% {
-      clip-path: polygon(
-        0% 53%,
-        93% 53%,
-        93% 62%,
-        68% 62%,
-        68% 37%,
-        97% 37%,
-        97% 89%,
-        13% 89%,
-        13% 45%,
-        51% 45%,
-        51% 88%,
-        17% 88%,
-        17% 54%,
-        81% 54%,
-        81% 75%,
-        79% 75%,
-        79% 76%,
-        38% 76%,
-        38% 28%,
-        61% 28%,
-        61% 12%,
-        55% 12%,
-        55% 62%,
-        68% 62%,
-        68% 51%,
-        0% 51%,
-        0% 92%,
-        63% 92%,
-        63% 4%,
-        65% 4%
-      );
-    }
-  
-    45% {
-      clip-path: polygon(
-        0% 33%,
-        2% 33%,
-        2% 69%,
-        58% 69%,
-        58% 94%,
-        55% 94%,
-        55% 25%,
-        33% 25%,
-        33% 85%,
-        16% 85%,
-        16% 19%,
-        5% 19%,
-        5% 20%,
-        79% 20%,
-        79% 96%,
-        93% 96%,
-        93% 50%,
-        5% 50%,
-        5% 74%,
-        55% 74%,
-        55% 57%,
-        96% 57%,
-        96% 59%,
-        87% 59%,
-        87% 65%,
-        82% 65%,
-        82% 39%,
-        63% 39%,
-        63% 92%,
-        4% 92%,
-        4% 36%,
-        24% 36%,
-        24% 70%,
-        1% 70%,
-        1% 43%,
-        15% 43%,
-        15% 28%,
-        23% 28%,
-        23% 71%,
-        90% 71%,
-        90% 86%,
-        97% 86%,
-        97% 1%,
-        60% 1%,
-        60% 67%,
-        71% 67%,
-        71% 91%,
-        17% 91%,
-        17% 14%,
-        39% 14%,
-        39% 30%,
-        58% 30%,
-        58% 11%,
-        52% 11%,
-        52% 83%,
-        68% 83%
-      );
-    }
-  
-    76% {
-      clip-path: polygon(
-        0% 26%,
-        15% 26%,
-        15% 73%,
-        72% 73%,
-        72% 70%,
-        77% 70%,
-        77% 75%,
-        8% 75%,
-        8% 42%,
-        4% 42%,
-        4% 61%,
-        17% 61%,
-        17% 12%,
-        26% 12%,
-        26% 63%,
-        73% 63%,
-        73% 43%,
-        90% 43%,
-        90% 67%,
-        50% 67%,
-        50% 41%,
-        42% 41%,
-        42% 46%,
-        50% 46%,
-        50% 84%,
-        96% 84%,
-        96% 78%,
-        49% 78%,
-        49% 25%,
-        63% 25%,
-        63% 14%
-      );
-    }
-  
-    90% {
-      clip-path: polygon(
-        0% 41%,
-        13% 41%,
-        13% 6%,
-        87% 6%,
-        87% 93%,
-        10% 93%,
-        10% 13%,
-        89% 13%,
-        89% 6%,
-        3% 6%,
-        3% 8%,
-        16% 8%,
-        16% 79%,
-        0% 79%,
-        0% 99%,
-        92% 99%,
-        92% 90%,
-        5% 90%,
-        5% 60%,
-        0% 60%,
-        0% 48%,
-        89% 48%,
-        89% 13%,
-        80% 13%,
-        80% 43%,
-        95% 43%,
-        95% 19%,
-        80% 19%,
-        80% 85%,
-        38% 85%,
-        38% 62%
-      );
-    }
-  
-    1%,
-    7%,
-    33%,
-    47%,
-    78%,
-    93% {
-      clip-path: none;
-    }
-  }
-  
-  .movement {
-    /* Normally this position would be absolute & on the layers, set to relative here so we can see it on the div */
-    position: relative;
-    animation: movement 8s step-end infinite;
-  }
-  
-  @keyframes movement {
-    0% {
-      top: 0px;
-      left: -20px;
-    }
-  
-    15% {
-      top: 10px;
-      left: 10px;
-    }
-  
-    60% {
-      top: 5px;
-      left: -10px;
-    }
-  
-    75% {
-      top: -5px;
-      left: 20px;
-    }
-  
-    100% {
-      top: 10px;
-      left: 5px;
-    }
-  }
-  
-  .opacity {
-    animation: opacity 5s step-end infinite;
-  }
-  
-  @keyframes opacity {
-    0% {
-      opacity: 0.1;
-    }
-  
-    5% {
-      opacity: 0.7;
-    }
-  
-    30% {
-      opacity: 0.4;
-    }
-  
-    45% {
-      opacity: 0.6;
-    }
-  
-    76% {
-      opacity: 0.4;
-    }
-  
-    90% {
-      opacity: 0.8;
-    }
-  
-    1%,
-    7%,
-    33%,
-    47%,
-    78%,
-    93% {
-      opacity: 0;
-    }
-  }
-  
-  .font {
-    animation: font 7s step-end infinite;
-  }
-  
-  @keyframes font {
-    0% {
-      font-weight: 100;
-      color: #e0287d;
-      filter: blur(3px);
-    }
-  
-    20% {
-      font-weight: 500;
-      color: #fff;
-      filter: blur(0);
-    }
-  
-    50% {
-      font-weight: 300;
-      color: #1bc7fb;
-      filter: blur(2px);
-    }
-  
-    60% {
-      font-weight: 700;
-      color: #fff;
-      filter: blur(0);
-    }
-  
-    90% {
-      font-weight: 500;
-      color: #e0287d;
-      filter: blur(6px);
-    }
-  }
-  
-  .glitch span {
-    animation: paths 5s step-end infinite;
-  }
-  
-  .glitch::before {
-    animation: paths 5s step-end infinite, opacity 5s step-end infinite,
-      font 8s step-end infinite, movement 10s step-end infinite;
-  }
-  
-  .glitch::after {
-    animation: paths 5s step-end infinite, opacity 5s step-end infinite,
-      font 7s step-end infinite, movement 8s step-end infinite;
-  }
-  
-  .hero-container {
-    position: relative;
-    text-align: center;
-  }
-  
-  .environment {
-    position: absolute;
-    height:100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.5;
-    /*filter: blur(5px);*/
-  } 
 
-  .btn{
-    position: relative;
-    margin: 10px auto;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      font-family: Arial;
-      color: #000000;
-      font-size: 27px;
-      background: #ffffff;
-      padding: 5px 20px 5px 20px;
-      text-decoration: none;
-    }
-    
-    .btn:hover {
-      box-shadow: 0 0 7px #ffffff, 0 0 7px #0000FF;
-    }
-
-  .hanger {
-    position: relative;
-    height:400px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
+  5% {
+    clip-path: polygon(
+      0% 29%,
+      44% 29%,
+      44% 83%,
+      94% 83%,
+      94% 56%,
+      11% 56%,
+      11% 64%,
+      94% 64%,
+      94% 70%,
+      88% 70%,
+      88% 32%,
+      18% 32%,
+      18% 96%,
+      10% 96%,
+      10% 62%,
+      9% 62%,
+      9% 84%,
+      68% 84%,
+      68% 50%,
+      52% 50%,
+      52% 55%,
+      35% 55%,
+      35% 87%,
+      25% 87%,
+      25% 39%,
+      15% 39%,
+      15% 88%,
+      52% 88%
+    );
   }
 
-  .rect-1 {
-    position: relative;
-    padding: 20px;
-    margin: -280px auto 100px auto;
-    box-sizing: border-box;
-    background: #161B33;
-    border: 10px solid #121113;
-    box-shadow: 0px 0px 10px #FFFFFF;
-    border-radius: 10px;
-    width: 70%;
+  30% {
+    clip-path: polygon(
+      0% 53%,
+      93% 53%,
+      93% 62%,
+      68% 62%,
+      68% 37%,
+      97% 37%,
+      97% 89%,
+      13% 89%,
+      13% 45%,
+      51% 45%,
+      51% 88%,
+      17% 88%,
+      17% 54%,
+      81% 54%,
+      81% 75%,
+      79% 75%,
+      79% 76%,
+      38% 76%,
+      38% 28%,
+      61% 28%,
+      61% 12%,
+      55% 12%,
+      55% 62%,
+      68% 62%,
+      68% 51%,
+      0% 51%,
+      0% 92%,
+      63% 92%,
+      63% 4%,
+      65% 4%
+    );
   }
 
-  .rect-2 {
-    width: 70%;
-    margin: auto;
-    box-sizing: border-box;
-
-    background: rgba(22, 27, 51, 0.5);
-    border: 1px solid #F4EDED;
-    border-radius: 15px;
-    padding: 20px;
+  45% {
+    clip-path: polygon(
+      0% 33%,
+      2% 33%,
+      2% 69%,
+      58% 69%,
+      58% 94%,
+      55% 94%,
+      55% 25%,
+      33% 25%,
+      33% 85%,
+      16% 85%,
+      16% 19%,
+      5% 19%,
+      5% 20%,
+      79% 20%,
+      79% 96%,
+      93% 96%,
+      93% 50%,
+      5% 50%,
+      5% 74%,
+      55% 74%,
+      55% 57%,
+      96% 57%,
+      96% 59%,
+      87% 59%,
+      87% 65%,
+      82% 65%,
+      82% 39%,
+      63% 39%,
+      63% 92%,
+      4% 92%,
+      4% 36%,
+      24% 36%,
+      24% 70%,
+      1% 70%,
+      1% 43%,
+      15% 43%,
+      15% 28%,
+      23% 28%,
+      23% 71%,
+      90% 71%,
+      90% 86%,
+      97% 86%,
+      97% 1%,
+      60% 1%,
+      60% 67%,
+      71% 67%,
+      71% 91%,
+      17% 91%,
+      17% 14%,
+      39% 14%,
+      39% 30%,
+      58% 30%,
+      58% 11%,
+      52% 11%,
+      52% 83%,
+      68% 83%
+    );
   }
 
-   .subhead {
-    font-family: 'Poppins', sans-serif;
-    font-size: 30px;
+  76% {
+    clip-path: polygon(
+      0% 26%,
+      15% 26%,
+      15% 73%,
+      72% 73%,
+      72% 70%,
+      77% 70%,
+      77% 75%,
+      8% 75%,
+      8% 42%,
+      4% 42%,
+      4% 61%,
+      17% 61%,
+      17% 12%,
+      26% 12%,
+      26% 63%,
+      73% 63%,
+      73% 43%,
+      90% 43%,
+      90% 67%,
+      50% 67%,
+      50% 41%,
+      42% 41%,
+      42% 46%,
+      50% 46%,
+      50% 84%,
+      96% 84%,
+      96% 78%,
+      49% 78%,
+      49% 25%,
+      63% 25%,
+      63% 14%
+    );
+  }
+
+  90% {
+    clip-path: polygon(
+      0% 41%,
+      13% 41%,
+      13% 6%,
+      87% 6%,
+      87% 93%,
+      10% 93%,
+      10% 13%,
+      89% 13%,
+      89% 6%,
+      3% 6%,
+      3% 8%,
+      16% 8%,
+      16% 79%,
+      0% 79%,
+      0% 99%,
+      92% 99%,
+      92% 90%,
+      5% 90%,
+      5% 60%,
+      0% 60%,
+      0% 48%,
+      89% 48%,
+      89% 13%,
+      80% 13%,
+      80% 43%,
+      95% 43%,
+      95% 19%,
+      80% 19%,
+      80% 85%,
+      38% 85%,
+      38% 62%
+    );
+  }
+
+  1%,
+  7%,
+  33%,
+  47%,
+  78%,
+  93% {
+    clip-path: none;
+  }
+}
+
+.movement {
+  /* Normally this position would be absolute & on the layers, set to relative here so we can see it on the div */
+  position: relative;
+  animation: movement 8s step-end infinite;
+}
+
+@keyframes movement {
+  0% {
+    top: 0px;
+    left: -20px;
+  }
+
+  15% {
+    top: 10px;
+    left: 10px;
+  }
+
+  60% {
+    top: 5px;
+    left: -10px;
+  }
+
+  75% {
+    top: -5px;
+    left: 20px;
+  }
+
+  100% {
+    top: 10px;
+    left: 5px;
+  }
+}
+
+.opacity {
+  animation: opacity 5s step-end infinite;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0.1;
+  }
+
+  5% {
+    opacity: 0.7;
+  }
+
+  30% {
+    opacity: 0.4;
+  }
+
+  45% {
+    opacity: 0.6;
+  }
+
+  76% {
+    opacity: 0.4;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  1%,
+  7%,
+  33%,
+  47%,
+  78%,
+  93% {
+    opacity: 0;
+  }
+}
+
+.font {
+  animation: font 7s step-end infinite;
+}
+
+@keyframes font {
+  0% {
+    font-weight: 100;
+    color: #e0287d;
+    filter: blur(3px);
+  }
+
+  20% {
     font-weight: 500;
-   }
+    color: #fff;
+    filter: blur(0);
+  }
 
-   .para {
-    font-family: 'Roboto', sans-serif;
-    font-style: italic;
-    font-size: 22px;
-    width: 70%;
-    margin: auto;
-   }
+  50% {
+    font-weight: 300;
+    color: #1bc7fb;
+    filter: blur(2px);
+  }
 
-   /* login */
+  60% {
+    font-weight: 700;
+    color: #fff;
+    filter: blur(0);
+  }
 
-   .login {
-    background-color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  90% {
+    font-weight: 500;
+    color: #e0287d;
+    filter: blur(6px);
+  }
+}
+
+.glitch span {
+  animation: paths 5s step-end infinite;
+}
+
+.glitch::before {
+  animation: paths 5s step-end infinite, opacity 5s step-end infinite,
+    font 8s step-end infinite, movement 10s step-end infinite;
+}
+
+.glitch::after {
+  animation: paths 5s step-end infinite, opacity 5s step-end infinite,
+    font 7s step-end infinite, movement 8s step-end infinite;
+}
+
+.hero-container {
+  position: relative;
+  text-align: center;
+}
+
+.environment {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.5;
+  /*filter: blur(5px);*/
+}
+
+.btn {
+  position: relative;
+  margin: 10px auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 27px;
+  background: #ffffff;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  box-shadow: 0 0 7px #ffffff, 0 0 7px #0000ff;
+}
+
+.hanger {
+  position: relative;
+  height: 400px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.rect-1 {
+  position: relative;
+  padding: 20px;
+  margin: -280px auto 100px auto;
+  box-sizing: border-box;
+  background: #161b33;
+  border: 10px solid #121113;
+  box-shadow: 0px 0px 10px #ffffff;
+  border-radius: 10px;
+  width: 70%;
+}
+
+.rect-2 {
+  width: 70%;
+  margin: auto;
+  box-sizing: border-box;
+
+  background: rgba(22, 27, 51, 0.5);
+  border: 1px solid #f4eded;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.subhead {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.para {
+  font-family: "Roboto", sans-serif;
+  font-style: italic;
+  font-size: 22px;
+  width: 70%;
+  margin: auto;
+}
+
+/* login */
+
+.login {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login__logo {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    object-fit: contain;
-    width: 100px;
-    margin-right: auto;
-    margin-left: auto;
-  }
+  margin-top: 20px;
+  margin-bottom: 20px;
+  object-fit: contain;
+  width: 100px;
+  margin-right: auto;
+  margin-left: auto;
+}
 
 .login__container {
-    width: 300px;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    border: 1px solid lightgray;
-    padding: 20px;
+  width: 300px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
 }
 
 .login__container > h1 {
-    font-weight: 500;
-    margin-bottom: 20px;
-  }
+  font-weight: 500;
+  margin-bottom: 20px;
+}
 
 .login__container > form > h5 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .login__container > form > input {
-    height: 30px;
-    margin-bottom: 10px;
-    background-color: white;
-    width: 98%;
-  }
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: white;
+  width: 98%;
+}
 
 .login__container > p {
-    margin-top: 15px;
-    font-size: 12px;
+  margin-top: 15px;
+  font-size: 12px;
 }
 
 .login__signInButton {
-    background: #f0c14b;
-    border-radius: 2px;
-    width: 100%;
-    height: 30px;
-    border: 1px solid;
-    margin-top: 10px;
-    border-color: #a88734 #9c7e31 #846a29;
+  background: #f0c14b;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+}
+
+.login__registerButton {
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: darkgray;
+}
+
+.robot {
+  width: 100vw;
+  height: 100vh;
+}
+.login {
+  background: url(images/login_bg.png);
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+.login_page {
+  background-color: #636270;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.robo {
+  width: 300px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 200px;
+}
+
+.gear {
+  animation: rotation 8s infinite linear;
+  width: 100px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 380px;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
   }
-
-  .login__registerButton {
-    border-radius: 2px;
-    width: 100%;
-    height: 30px;
-    border: 1px solid;
-    margin-top: 10px;
-    border-color: darkgray;
+  to {
+    transform: rotate(359deg);
   }
+}
 
-  .robot {
-    width: 100vw;
-    height: 100vh;
-  }
-   .login {
-    background: url(images/login_bg.png);
-    mix-blend-mode: overlay;
-    opacity: 0.5;
-   }
+.nav {
+  position: absolute;
+  width: 100%;
+  height: 80px;
+  left: 0px;
+  top: 0px;
+  background: #121113;
+  opacity: 0.9;
+  display: flex;
+}
 
-   .login_page {
-    background-color: #636270;
-   }
+.loading_page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(50% 50% at 50% 50%, #101840 0%, #020618 100%);
+}
 
-   .loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-   }
+#nav_head {
+  height: 30px;
+  font-family: "MyWebFont", Fallback, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  color: white;
+  position: relative;
+  margin-top: 15px;
+  margin-left: 30px;
+}
 
-   .robo {
-    width: 300px;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-    top:200px;
-   }
+/* Start Game */
 
-   .gear {
-    animation: rotation 8s infinite linear;
-    width: 100px;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-    top:380px;
+body,
+html {
+}
 
-  }
-  
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
+* {
+  box-sizing: border-box;
+}
 
-   .nav {
-    position: absolute;
-    width: 100%;
-    height: 80px;
-    left: 0px;
-    top: 0px;
-    background: #121113;
-    opacity: 0.9;
-    display: flex;
-   }
+p {
+  text-align: left;
+  font-size: 2.5vh;
+  padding: 5px;
+}
 
-  .loading_page {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      background: radial-gradient(50% 50% at 50% 50%, #101840 0%, #020618 100%);
-    }
+.bg-image {
+  /* The image used */
+  background-image: url("./images/StartGame.png");
 
-    #nav_head{
-      height: 30px;
-      font-family: 'MyWebFont', Fallback, sans-serif;
-      font-weight: 400;
-      font-size: 30px;
-      color: white;
-      position: relative;
-      margin-top: 15px;
-      margin-left: 30px;
-      }
+  /* Add the blur effect */
+  position: relative;
+  /* Full height */
+  height: 100vh;
 
-      /* Start Game */
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-      body, html {
-      }
-      
-      * {
-        box-sizing: border-box;
-      }
-    
-      p{
-        text-align: left;
-        font-size: 2.5vh;
-        padding: 5px;
-      }
-      
-      .bg-image {
-        /* The image used */
-        background-image: url("./images/StartGame.png");
-      
-        /* Add the blur effect */
-        position: relative;
-        /* Full height */
-        height: 100vh;
-      
-        /* Center and scale the image nicely */
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-      
-      /* Position text in the middle of the page/image */
-      .bg-text {
-        position: absolute;
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-        color: white;
-        font-weight: bold;
-        border: 5px solid #f1f1f1;
-        margin: auto;
-        height: 80vh;
-        left: 10.5vw;
-        top: 50px;
-        overflow-y: scroll;
-        z-index: 2;
-        width: 80%;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-      }
-      .body{
-        position: relative;
-      }
- 
-      /* Game Page */
+/* Position text in the middle of the page/image */
+.bg-text {
+  position: absolute;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 5px solid #f1f1f1;
+  margin: auto;
+  height: 80vh;
+  left: 10.5vw;
+  top: 50px;
+  overflow-y: scroll;
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+.body {
+  position: relative;
+}
 
-      .game_page {
-        background: url('images/game_page.png')
-        center no-repeat;
-        background-size: cover;
-        height: 100vh;
-      }
-      #background-video {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: -1;
-      }
-  
-    .questions {
-      font-family: 'Roboto', sans-serif;
-      font-size: 22px;
-      width: 80%;
-      margin: 150px 100px 0;
-      opacity: 0.9;
-      color: white;
-      padding: 30px;
-      background: rgba(22, 27, 51, 0.75);
-      border: 5px solid #F4EDED;
-      border-radius: 10px;
-      }
+/* Game Page */
 
-  .fa_helpers {
-    color: white;
-    font-size: 30px;
-    margin: 0px 15px;
-  }
+.game_page {
+  background: url("images/game_page.png") center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
 
-  .helpers {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    display: flex;
-  }
+.questions {
+  font-family: "Roboto", sans-serif;
+  font-size: 22px;
+  width: 80%;
+  margin: 150px 100px 0;
+  opacity: 0.9;
+  color: white;
+  padding: 30px;
+  background: rgba(22, 27, 51, 0.75);
+  border: 5px solid #f4eded;
+  border-radius: 10px;
+}
 
-  .heart {
-    margin-top: 3px;
-  }
+.fa_helpers {
+  color: white;
+  font-size: 30px;
+  margin: 0px 15px;
+}
 
-  .helpers_no {
-    color: #121113;
-    font-size: 20px;
-    background-color: white;
-    margin: auto;
-    padding: 0 15px;
-    border-radius: 4px;
-  }
+.helpers {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+}
 
-  .money {
-    width: 27px;
-    margin-top: 5px;
-  }
+.heart {
+  margin-top: 3px;
+}
 
-  .timer {
-    position: relative;
-    top: 130px;
-    text-align: center;
-    font-size: 40px;
-    letter-spacing: 7px;
-    color: white;
-    text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 15px #09069f, 0 0 20px #024aae, 0 0 25px #008ee6, 0 0 30px #0facc8, 0 0 33px #00e6de;
-  }
+.helpers_no {
+  color: #121113;
+  font-size: 20px;
+  background-color: white;
+  margin: auto;
+  padding: 0 15px;
+  border-radius: 4px;
+}
 
-  .option_part {
-    margin-top: 30px;
-  }
+.money {
+  width: 27px;
+  margin-top: 5px;
+}
 
-  .options_btn {
-    border: 5px solid #ffffff;
-    border-radius: 100%;
-    text-decoration: none;
-    height: 25px;
-    width: 25px;
-    margin: 20px;
-    }
-    
-    .options_btn:active {
-      background-color:#ffffff;
-    }
+.timer {
+  position: relative;
+  top: 130px;
+  text-align: center;
+  font-size: 40px;
+  letter-spacing: 7px;
+  color: white;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 15px #09069f, 0 0 20px #024aae,
+    0 0 25px #008ee6, 0 0 30px #0facc8, 0 0 33px #00e6de;
+}
 
-    .options {
-      display: flex;
-      align-items: center;
-    }
+.option_part {
+  margin-top: 30px;
+}
 
-    .options h2 {
-      font-size: 23px;
-      color: #fff;
-      background-color: transparent;
-      /* opacity: 20%; */
-      padding: 3px 30px;
-      width: 700px;
-      border-radius: 5px;
-    }
+.options_btn {
+  border: 5px solid #ffffff;
+  border-radius: 100%;
+  text-decoration: none;
+  height: 25px;
+  width: 25px;
+  margin: 20px;
+}
 
-    .question_part {
-      width: 80%;
-      float: left;
-      font-size: 16px;
-    }
+.options_btn:active {
+  background-color: #ffffff;
+}
 
-    .lifelines {
-      background: rgba(22, 27, 51, 0.75);
-      border: 5px solid #ffffff;
-      width: 9%;
-      height: 450px;
-      margin: 110px 20px 0;
-      opacity: 0.9;
-      float: left;
-      color: white;
-      background: rgba(22, 27, 51, 0.75);
-      border: 5px solid #F4EDED;
-      border-radius: 10px;
-      justify-content: center;
+.options {
+  display: flex;
+  align-items: center;
+}
 
-    }
+.options h2 {
+  font-size: 23px;
+  color: #fff;
+  background-color: transparent;
+  /* opacity: 20%; */
+  padding: 3px 30px;
+  width: 700px;
+  border-radius: 5px;
+}
 
-    .lifeline {
-      border-radius: 100%;
-      text-decoration: none;
-      height: 60px;
-      width: 60px;
-      position: relative;
-      margin: 17px 38px 0 auto;
-      font-size: 30px;
-      background-color: white;
-      display: flex;
-    }
+.question_part {
+  width: 80%;
+  float: left;
+  font-size: 16px;
+}
 
-    .lifeline_btn_container {
-      color: blanchedalmond;
-      background: white;
-      height: 30px;
-      width: 30px;
-      border-radius: 100%;
-      text-decoration: none;
-      opacity: 1;
-      font-size: 15px;
-      margin: auto;
-      text-align: center;
-      
-    }
-    
+.lifelines {
+  background: rgba(22, 27, 51, 0.75);
+  border: 5px solid #ffffff;
+  width: 9%;
+  height: 450px;
+  margin: 110px 20px 0;
+  opacity: 0.9;
+  float: left;
+  color: white;
+  background: rgba(22, 27, 51, 0.75);
+  border: 5px solid #f4eded;
+  border-radius: 10px;
+  justify-content: center;
+}
 
-    .lifeline_btn {
-      position: relative;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      z-index: 1;
-    }
+.lifeline {
+  border-radius: 100%;
+  text-decoration: none;
+  height: 60px;
+  width: 60px;
+  position: relative;
+  margin: 17px 38px 0 auto;
+  font-size: 30px;
+  background-color: white;
+  display: flex;
+}
 
-    .pts {
-      font-size: 18px;
-      /* margin: 1px; */
-      display: flex;
-      justify-content: center;
-    }
+.lifeline_btn_container {
+  color: blanchedalmond;
+  background: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  text-decoration: none;
+  opacity: 1;
+  font-size: 15px;
+  margin: auto;
+  text-align: center;
+}
 
-    /* Game Over Page */
+.lifeline_btn {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+}
 
-    .game-over {
-        color: #ccc;
-        font-family: sans-serif;
-        background: url('images/game_page.png')
-          center no-repeat;
-        background-size: cover;
-        backdrop-filter: blur(1px);
-        height:100vh;
-        display: flex;
-        justify-content: center;
-    }
+.pts {
+  font-size: 18px;
+  /* margin: 1px; */
+  display: flex;
+  justify-content: center;
+}
 
-    .game_score {
-      position: absolute;
-      top:30%;
-      text-align: center;
-    }
+/* Game Over Page */
 
-    .game_score h1 {
-        font-family: 'MyWebFont', Fallback, sans-serif;
-        font-weight: 400;
-        font-size: 80px;
-        line-height: 74px;
-        color: #ffffff;
+.game-over {
+  color: #ccc;
+  font-family: sans-serif;
+  background: url("images/game_page.png") center no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(1px);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
 
-    }
+.game_score {
+  position: absolute;
+  top: 30%;
+  text-align: center;
+}
 
-    .game_score h2 {
-      margin-top: 20px;
-      font-size: 40px;
-      font-weight: 700;
-    }
+.game_score h1 {
+  font-family: "MyWebFont", Fallback, sans-serif;
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 74px;
+  color: #ffffff;
+}
 
-    .game_score .glow {
-      position: relative;
-      box-shadow: 
-        0 0 0 30px white(0, 0%, 50%),
-        0 0 0 55px #82D9FF(0, 0%, 60%),
-        0px 51.7013px 55.2116px #0066FF, 0px 55.524px 68.86458px rgba(0, 13, 21, 0.7),
-        0 0 0 55px hsl(0, 0%, 80%),
-        0 0 0 60px hsl(0, 0%, 90%);
-    }
-    #head_login{
-      color: wheat;
-      font-family: 'MyWebFont', Fallback, sans-serif;
-      font-weight: 400;
-      font-size: 30px;
-      }
-      
-    .Logo1{
-      position: relative;
-      top: 0%;
-      height: 60px;
-      width: 100px;
-      border-radius: 50%;
-    }
-    .Logo1:hover{
-      position: relative;
-      top: 0%;
-      /* -webkit-box-shadow:0px 0px 150px 12px rgba(80,80,242,1);
+.game_score h2 {
+  margin-top: 20px;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.game_score .glow {
+  position: relative;
+  box-shadow: 0 0 0 30px white(0, 0%, 50%), 0 0 0 55px #82D9FF(0, 0%, 60%),
+    0px 51.7013px 55.2116px #0066ff,
+    0px 55.524px 68.86458px rgba(0, 13, 21, 0.7), 0 0 0 55px hsl(0, 0%, 80%),
+    0 0 0 60px hsl(0, 0%, 90%);
+}
+#head_login {
+  color: wheat;
+  font-family: "MyWebFont", Fallback, sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.Logo1 {
+  position: relative;
+  top: 0%;
+  height: 60px;
+  width: 100px;
+  border-radius: 50%;
+}
+.Logo1:hover {
+  position: relative;
+  top: 0%;
+  /* -webkit-box-shadow:0px 0px 150px 12px rgba(80,80,242,1);
       -moz-box-shadow: 0px 0px 150px 12px rgba(80,80,242,1);
       box-shadow: 0px 0px 150px 12px rgba(80,80,242,1); */
-      transform: translateY(0);
-      transition: .5s;
-      box-shadow:
-        inset 0 0 60px whitesmoke,
-        inset 20px 0 80px #f0f,
-        inset -20px 0 80px #0ff,
-        inset 20px 0 300px #f0f,
-        inset -20px 0 300px #0ff,
-        0 0 50px #fff,
-        -10px 0 80px #f0f,
-        10px 0 80px #0ff;
-          border-radius: 50%;
-        }
-    
+  transform: translateY(0);
+  transition: 0.5s;
+  box-shadow: inset 0 0 60px whitesmoke, inset 20px 0 80px #f0f,
+    inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff,
+    0 0 50px #fff, -10px 0 80px #f0f, 10px 0 80px #0ff;
+  border-radius: 50%;
+}
 
-    .Logodisabled{
-      -webkit-filter: blur(8px);
-      border: 1px solid #0066cc;
-      background-color: black;;
-      color: #ffffff;
-      border-radius: 50%;
-      /* padding: 5px 10px; */
-    }
+.Logodisabled {
+  -webkit-filter: blur(8px);
+  border: 1px solid #0066cc;
+  background-color: black;
+  color: #ffffff;
+  border-radius: 50%;
+  /* padding: 5px 10px; */
+}
 
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        text-shadow:
-          0 0 4px #fff,
-          0 0 11px #fff,
-          0 0 19px #fff,
-          0 0 40px rgb(45, 59, 167),
-          0 0 80px rgb(45, 59, 167),
-          0 0 90px rgb(45, 59, 167),
-          0 0 100px rgb(45, 59, 167),
-          0 0 150px rgb(45, 59, 167);
-      }
-      20%, 24%, 55% {       
-        text-shadow: none;
-      }
-    }
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff,
+      0 0 40px rgb(45, 59, 167), 0 0 80px rgb(45, 59, 167),
+      0 0 90px rgb(45, 59, 167), 0 0 100px rgb(45, 59, 167),
+      0 0 150px rgb(45, 59, 167);
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
 
-    .spq{
-        animation: flicker 1.5s infinite alternate;     
-      
-    }
-    .op:hover{
-      transform: translateY(0);
-      transition: .5s;
-      box-shadow:
-        inset 0 0 60px whitesmoke,
-        inset 20px 0 80px royalblue,
-        inset -20px 0 80px rgb(3, 50, 50),
-        inset 20px 0 300px royalblue,
-        inset -20px 0 300px rgb(3, 50, 50),
-        0 0 50px #fff,
-        -10px 0 80px royalblue,
-        10px 0 80px rgb(3, 50, 50);
-        color: #000000;
-    }
-    .right:active{
-      box-shadow:
-        inset 0 0 60px rgb(9, 255, 0),
-        inset 20px 0 80px royalblue,
-        inset -20px 0 80px rgb(3, 50, 50),
-        inset 20px 0 300px royalblue,
-        inset -20px 0 300px rgb(3, 50, 50),
-        0 0 50px #fff,
-        -10px 0 80px royalblue,
-        10px 0 80px rgb(3, 50, 50);
-        color: #000000;
-    }
-    .wrong:active{
-      box-shadow:
-        inset 0 0 60px rgb(255, 0, 0),
-        inset 20px 0 80px royalblue,
-        inset -20px 0 80px rgb(3, 50, 50),
-        inset 20px 0 300px royalblue,
-        inset -20px 0 300px rgb(3, 50, 50),
-        0 0 50px #fff,
-        -10px 0 80px royalblue,
-        10px 0 80px rgb(3, 50, 50);
-        color: #000000;
-    }
-    .life{
-      color: white;
-      font-size: xx-large !important;
-      position: relative;
-      top: 110px;
-      left: 20px;
-      width: 1500px !important;
-    }
-    .lifemoney{
-      position: relative;
-      margin: 5px;
-    }
+.spq {
+  animation: flicker 1.5s infinite alternate;
+}
+.op:hover {
+  transform: translateY(0);
+  transition: 0.5s;
+  box-shadow: inset 0 0 60px whitesmoke, inset 20px 0 80px royalblue,
+    inset -20px 0 80px rgb(3, 50, 50), inset 20px 0 300px royalblue,
+    inset -20px 0 300px rgb(3, 50, 50), 0 0 50px #fff, -10px 0 80px royalblue,
+    10px 0 80px rgb(3, 50, 50);
+  color: #000000;
+}
+.right:active {
+  box-shadow: inset 0 0 60px rgb(9, 255, 0), inset 20px 0 80px royalblue,
+    inset -20px 0 80px rgb(3, 50, 50), inset 20px 0 300px royalblue,
+    inset -20px 0 300px rgb(3, 50, 50), 0 0 50px #fff, -10px 0 80px royalblue,
+    10px 0 80px rgb(3, 50, 50);
+  color: #000000;
+}
+.wrong:active {
+  box-shadow: inset 0 0 60px rgb(255, 0, 0), inset 20px 0 80px royalblue,
+    inset -20px 0 80px rgb(3, 50, 50), inset 20px 0 300px royalblue,
+    inset -20px 0 300px rgb(3, 50, 50), 0 0 50px #fff, -10px 0 80px royalblue,
+    10px 0 80px rgb(3, 50, 50);
+  color: #000000;
+}
+.life {
+  color: white;
+  font-size: xx-large !important;
+  position: relative;
+  top: 110px;
+  left: 20px;
+  width: 1500px !important;
+}
+.lifemoney {
+  position: relative;
+  margin: 5px;
+}
 
-    .Logostart{
-      background-color: white;
-      display: inline;
-      position: relative;
-      top: 0%;
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
+.Logostart {
+  background-color: white;
+  display: inline;
+  position: relative;
+  top: 0%;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
